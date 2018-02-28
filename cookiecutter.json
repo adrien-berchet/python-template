@@ -1,0 +1,15 @@
+{
+    "author_name": "BlueBrain NSE",
+    "author_email": "bbp-ou-nse@groupes.epfl.ch",
+
+    "project_name": "foo",
+    "package_name": "{{ cookiecutter.project_name.lower().replace('-', '_') }}",
+    "version": "0.0.1.dev0",
+    "description": "",
+
+    "gerrit_repo": "nse/{{ cookiecutter.project_name }}",
+    "download_url": "ssh://bbpcode.epfl.ch/{{ cookiecutter.gerrit_repo }}",
+    "project_url": "https://bbpteam.epfl.ch/project/issues/projects/NSETM/issues",
+
+    "year": "2018"
+}

@@ -1,0 +1,6 @@
+[gerrit]
+host=bbpcode.epfl.ch
+port=22
+project={{ cookiecutter.gerrit_repo }}
+defaultbranch=master
+defaultremote=origin
