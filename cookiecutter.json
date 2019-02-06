@@ -11,5 +11,5 @@
     "download_url": "ssh://bbpcode.epfl.ch/{{ cookiecutter.gerrit_repo }}",
     "project_url": "https://bbpteam.epfl.ch/project/issues/projects/NSETM/issues",
 
-    "year": "2018"
+    "year": "2019"
 }
