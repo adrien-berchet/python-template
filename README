@@ -1,4 +1,8 @@
 After cookie-cutting:
-1) move 'extra/jjb-nse' content to 'infra/jjb-nse' repo
-2) move 'extra/bbp-nixpkgs' content to 'bbp-nixpkgs' repo
+1) add 'extra/jjb-nse' content to 'infra/jjb-nse' repo:
+   https://bbpcode.epfl.ch/browse/code/infra%2Fjenkins%2Fjjb-nse/
+
+2) complete Spack recipe in 'extra/spack'; and add it to BlueBrain Spack repo:
+   https://github.com/BlueBrain/spack#the-bluebrain-spack-deployment
+
 3) 'extra' folder can now be removed
