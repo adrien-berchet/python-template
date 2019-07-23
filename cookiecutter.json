@@ -5,7 +5,7 @@
     "project_name": "foo",
     "package_name": "{{ cookiecutter.project_name.lower().replace('-', '_') }}",
     "version": "0.0.1.dev0",
-    "description": "",
+    "description": "TODO: write something meaningful here",
 
     "gerrit_repo": "nse/{{ cookiecutter.project_name }}",
     "download_url": "ssh://bbpcode.epfl.ch/{{ cookiecutter.gerrit_repo }}",
