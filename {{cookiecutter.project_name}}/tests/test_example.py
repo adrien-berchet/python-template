@@ -1,5 +1,5 @@
 """Sample nosetest file."""
-from {{ cookiecutter.project_name }} import example
+from {{ cookiecutter.package_name }} import example
 
 
 def test_add_3_4():
