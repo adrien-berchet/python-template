@@ -17,7 +17,10 @@ setup(
     version=VERSION,
     description="{{ cookiecutter.description }}",
     url="{{ cookiecutter.project_url }}",
-    download_url="{{ cookiecutter.download_url }}",
+    project_urls={
+        "Tracker": "{{ cookiecutter.tracker_url }}",
+        "Source": "{{ cookiecutter.download_url }}",
+    },
     license="BBP-internal-confidential",
     install_requires=[
     ],

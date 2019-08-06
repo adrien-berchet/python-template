@@ -9,7 +9,8 @@
 
     "gerrit_repo": "nse/{{ cookiecutter.project_name }}",
     "download_url": "ssh://bbpcode.epfl.ch/{{ cookiecutter.gerrit_repo }}",
-    "project_url": "https://bbpteam.epfl.ch/project/issues/projects/NSETM/issues",
+    "tracker_url": "https://bbpteam.epfl.ch/project/issues/projects/NSETM/issues",
+    "project_url": "https://bbpteam.epfl.ch/documentation/projects/{{ cookiecutter.project_name }}",
 
     "year": "2019"
 }
