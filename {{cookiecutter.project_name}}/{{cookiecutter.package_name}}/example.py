@@ -1,6 +1,4 @@
-"""
-Example code to show complete use case.
-"""
+"""Example code to show complete use case."""
 
 
 def add(x, y):
@@ -12,5 +10,6 @@ def add(x, y):
 
     Returns:
        the sum of the two numbers
+
     """
     return x + y
