@@ -5,8 +5,9 @@ import sys
 
 from setuptools import setup, find_packages
 
-if sys.version_info < (2, 7):
-    sys.exit("Sorry, Python < 2.7 is not supported")
+if sys.version_info < (3, 6):
+    sys.exit("Sorry, Python < 3.6 is not supported")
+
 
 VERSION = imp.load_source("", "{{ cookiecutter.package_name }}/version.py").__version__
 
@@ -25,15 +26,15 @@ setup(
     install_requires=[
     ],
     packages=find_packages(),
+    python_requires='>=3.6',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Education',
         'Intended Audience :: Science/Research',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
     ],
 )
