@@ -6,3 +6,4 @@
    :maxdepth: 2
 
    Home <self>
+   changelog
