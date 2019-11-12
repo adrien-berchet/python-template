@@ -2,7 +2,7 @@
     "author_name": "BlueBrain NSE",
     "author_email": "bbp-ou-nse@groupes.epfl.ch",
 
-    "project_name": "foo",
+    "project_name": "my-project",
     "package_name": "{{ cookiecutter.project_name.lower().replace('-', '_') }}",
     "version": "0.0.1.dev0",
     "description": "TODO: write something meaningful here",
