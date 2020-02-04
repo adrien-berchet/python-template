@@ -3,7 +3,7 @@ from {{ cookiecutter.package_name }} import example
 
 
 def test_add_3_4():
-    "Adding 3 and 4."""
+    """Adding 3 and 4."""
     assert example.add(3, 4) == 7
 
 
