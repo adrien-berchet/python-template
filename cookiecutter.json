@@ -12,5 +12,5 @@
     "tracker_url": "https://bbpteam.epfl.ch/project/issues/projects/NSETM/issues",
     "project_url": "https://bbpteam.epfl.ch/documentation/projects/{{ cookiecutter.project_name }}",
 
-    "year": "2019"
+    "year": "2020"
 }
