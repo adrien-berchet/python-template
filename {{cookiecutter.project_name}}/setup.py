@@ -8,6 +8,9 @@ from setuptools import setup, find_packages
 if sys.version_info < (3, 6):
     sys.exit("Sorry, Python < 3.6 is not supported")
 
+# read the contents of the README file
+with open("README.rst", encoding="utf-8") as f:
+    README = f.read()
 
 VERSION = imp.load_source("", "{{ cookiecutter.package_name }}/version.py").__version__
 
@@ -17,6 +20,8 @@ setup(
     author_email="{{ cookiecutter.author_email }}",
     version=VERSION,
     description="{{ cookiecutter.description }}",
+    long_description=README,
+    long_description_content_type="text/x-rst",
     url="{{ cookiecutter.project_url }}",
     project_urls={
         "Tracker": "{{ cookiecutter.tracker_url }}",
