@@ -34,7 +34,7 @@ def _do_replacements(content):
 
     # replace the html_theme variable
     content = content.replace(
-        "html_theme = 'alabaster'", "html_theme = 'sphinx-limestone-theme'"
+        "html_theme = 'alabaster'", "html_theme = 'sphinx-bluebrain-theme'"
     )
 
     # comment out the static path
