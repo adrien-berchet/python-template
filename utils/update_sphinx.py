@@ -23,40 +23,54 @@ html_title = u'{{ cookiecutter.project_name }}'
 html_show_sourcelink = False
 """
 
+DEFAULT_THEME = "alabaster"
+
 
 def _do_replacements(content):
     """Replace portions of the conf.py"""
-    # first replace the quotes around the version numbers
+    # replace version placeholders
     content = content.replace(
-        "'{{ cookiecutter.package_name }}.__version__'",
-        "{{ cookiecutter.package_name }}.__version__",
+        "'VERSION-PLACEHOLDER'",
+        "get_distribution('{{ cookiecutter.package_name }}').version",
+        1,
     )
+    content = content.replace("'VERSION-PLACEHOLDER'", "version")
 
     # replace the html_theme variable
-    content = content.replace(
-        "html_theme = 'alabaster'", "html_theme = 'sphinx-bluebrain-theme'"
-    )
+    if DEFAULT_THEME not in content:
+        raise ValueError("Expected default theme was not found: %s" % DEFAULT_THEME)
+    content = content.replace(DEFAULT_THEME, "sphinx-bluebrain-theme")
 
     # comment out the static path
     static_re = re.compile(r"^html_static_path.*", flags=re.MULTILINE)
+    if static_re.search(content) is None:
+        raise ValueError("Expected 'html_static_path' config variable not found")
     content = static_re.sub("# \g<0>", content)
 
     # comment out the template path
     templates_re = re.compile(r"^templates_path.*", flags=re.MULTILINE)
+    if templates_re.search(content) is None:
+        raise ValueError("Expected 'templates_path' config variable not found")
     content = templates_re.sub("# \g<0>", content)
 
     # remove the copyright which is injected by the theme
     copyright_re = re.compile(r"^copyright.*\n", flags=re.MULTILINE)
+    if copyright_re.search(content) is None:
+        raise ValueError("Expected 'copyright' config variable not found")
     content = copyright_re.sub("", content)
 
     # remove the author which is not required
     author_re = re.compile(r"^author.*\n", flags=re.MULTILINE)
+    if author_re.search(content) is None:
+        raise ValueError("Expected 'author' config variable not found")
     content = author_re.sub("", content)
 
-    # add the self import
+    # add the get_distribution import
     import_re = re.compile(r"(import sys.*?\n)(\n)", flags=re.DOTALL)
+    if import_re.search(content) is None:
+        raise ValueError("Expected 'import sys' in conf.py not found")
     content = import_re.sub(
-        "\g<1>\nimport {{ cookiecutter.package_name }}\n\n", content
+        "\g<1>\nfrom pkg_resources import get_distribution\n\n", content
     )
 
     return content
@@ -76,7 +90,7 @@ def main(output_path):
             "--author",
             "NSE",
             "-v",
-            "{{ cookiecutter.package_name }}.__version__",
+            "VERSION-PLACEHOLDER",
             "--no-batchfile",
             "--sep",
             "-d",

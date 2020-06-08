@@ -14,7 +14,7 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-import {{ cookiecutter.package_name }}
+from pkg_resources import get_distribution
 
 
 # -- Project information -----------------------------------------------------
@@ -22,10 +22,10 @@ import {{ cookiecutter.package_name }}
 project = '{{ cookiecutter.project_name }}'
 
 # The short X.Y version
-version = {{ cookiecutter.package_name }}.__version__
+version = get_distribution('{{ cookiecutter.package_name }}').version
 
 # The full version, including alpha/beta/rc tags
-release = {{ cookiecutter.package_name }}.__version__
+release = version
 
 
 # -- General configuration ---------------------------------------------------
