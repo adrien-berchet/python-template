@@ -2,5 +2,5 @@
     name: '{{ cookiecutter.project_name }}'
     git_project: '{{ cookiecutter.gerrit_repo }}'
     jobs:
-      - 'nse.python.{name}.gerrit'
-      - 'nse.python.{name}'
+      - '{{ cookiecutter.team_name }}.python.{name}.gerrit'
+      - '{{ cookiecutter.team_name }}.python.{name}'

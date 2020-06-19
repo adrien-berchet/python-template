@@ -6,8 +6,8 @@
     "package_name": "{{ cookiecutter.project_name.lower().replace('-', '_') }}",
     "version": "0.0.1.dev0",
     "description": "TODO: write something meaningful here",
-
-    "gerrit_repo": "nse/{{ cookiecutter.project_name }}",
+    "team_name": "nse",
+    "gerrit_repo": "{{ cookiecutter.team_name }}/{{ cookiecutter.project_name }}",
     "download_url": "ssh://bbpcode.epfl.ch/{{ cookiecutter.gerrit_repo }}",
     "tracker_url": "https://bbpteam.epfl.ch/project/issues/projects/NSETM/issues",
     "project_url": "https://bbpteam.epfl.ch/documentation/projects/{{ cookiecutter.project_name }}",
