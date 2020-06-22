@@ -31,6 +31,7 @@ setup(
     install_requires=[],
     packages=find_packages(),
     python_requires=">=3.6",
+    extras_require={"docs": ["sphinx", "sphinx-bluebrain-theme"]},
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Education",
