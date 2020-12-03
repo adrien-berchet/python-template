@@ -9,3 +9,4 @@ doc/source/generated
 build
 dist
 .eggs
+.idea
