@@ -1,4 +1,4 @@
-"""Sample nosetest file."""
+"""Sample test file."""
 from {{ cookiecutter.package_name }} import example
 
 

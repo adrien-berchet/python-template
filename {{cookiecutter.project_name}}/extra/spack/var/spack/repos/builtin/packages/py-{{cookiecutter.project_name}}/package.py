@@ -14,7 +14,7 @@ class Py-{{ cookiecutter.project_name }}(PythonPackage):
     git      = "{{ cookiecutter.download_url }}"
 
     version('develop', branch='master')
-    version('{{ cookiecutter.version }}', tag='{{ cookiecutter.project_name }}-v{{ cookiecutter.version }}', preferred=True)
+    version('{{ cookiecutter.version }}', tag='{{ cookiecutter.project_name }}-v{{ cookiecutter.version }}')
 
     depends_on('py-setuptools', type='build')  # type=('build', 'run') if specifying entry points in 'setup.py'
 

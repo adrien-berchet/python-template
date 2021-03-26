@@ -8,5 +8,6 @@ doc/source/generated
 .tox
 build
 dist
+venv
 .eggs
 .idea
