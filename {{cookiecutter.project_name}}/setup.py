@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import imp
+import importlib.util
 import sys
 
 from setuptools import setup, find_packages
@@ -12,7 +12,13 @@ if sys.version_info < (3, 6):
 with open("README.rst", encoding="utf-8") as f:
     README = f.read()
 
-VERSION = imp.load_source("", "{{ cookiecutter.package_name }}/version.py").__version__
+spec = importlib.util.spec_from_file_location(
+    "{{ cookiecutter.package_name }}.version",
+    "{{ cookiecutter.package_name }}/version.py",
+)
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+VERSION = module.__version__
 
 setup(
     name="{{ cookiecutter.project_name }}",
