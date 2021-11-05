@@ -4,13 +4,13 @@
 
     "project_name": "my-project",
     "package_name": "{{ cookiecutter.project_name.lower().replace('-', '_') }}",
-    "version": "0.0.1.dev0",
+    "version": "0.1.0.dev0",
     "description": "TODO: write something meaningful here",
     "team_name": "nse",
-    "gerrit_repo": "{{ cookiecutter.team_name }}/{{ cookiecutter.project_name }}",
-    "download_url": "ssh://bbpcode.epfl.ch/{{ cookiecutter.gerrit_repo }}",
+    "repository": "{{ cookiecutter.team_name }}/{{ cookiecutter.project_name }}",
+    "download_url": "git@bbpgitlab.epfl.ch:{{ cookiecutter.repository }}.git",
     "tracker_url": "https://bbpteam.epfl.ch/project/issues/projects/NSETM/issues",
     "project_url": "https://bbpteam.epfl.ch/documentation/projects/{{ cookiecutter.project_name }}",
 
-    "year": "2020"
+    "year": "{% now 'utc', '%Y' %}"
 }

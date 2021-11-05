@@ -1,0 +1,3 @@
+include:
+  - project: '{{ cookiecutter.team_name }}/ci'
+    file: '/ci/pipelines/{{ cookiecutter.team_name }}.{{ cookiecutter.project_name }}.yml'
