@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 import importlib.util
+from pathlib import Path
 
 from setuptools import setup, find_packages
-
-# read the contents of the README file
-with open("README.rst", "r", encoding="utf-8") as f:
-    README = f.read()
 
 spec = importlib.util.spec_from_file_location(
     "{{ cookiecutter.package_name }}.version",
@@ -21,7 +18,7 @@ setup(
     author_email="{{ cookiecutter.author_email }}",
     version=VERSION,
     description="{{ cookiecutter.description }}",
-    long_description=README,
+    long_description=Path("README.rst").read_text(encoding="utf-8"),
     long_description_content_type="text/x-rst",
     url="{{ cookiecutter.project_url }}",
     project_urls={
