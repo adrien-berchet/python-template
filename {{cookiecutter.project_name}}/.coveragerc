@@ -1,0 +1,5 @@
+[paths]
+source_paths =
+	{{ cookiecutter.package_name }}
+	*/site-packages/{{ cookiecutter.package_name }}
+	*/{{ cookiecutter.project_name }}/{{ cookiecutter.package_name }}

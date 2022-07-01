@@ -1,3 +1,4 @@
-"""{{ cookiecutter.package_name }}."""
+"""{{ cookiecutter.project_name }} package."""
+import pkg_resources
 
-from {{ cookiecutter.package_name }}.version import __version__
+__version__ = pkg_resources.get_distribution("{{ cookiecutter.project_name }}").version

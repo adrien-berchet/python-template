@@ -1,16 +1,18 @@
 {
-    "author_name": "bbp-ou-nse",
-    "author_email": "bbp-ou-nse@groupes.epfl.ch",
+    "author_name": "bbp-ou-cells",
+    "author_email": "bbp-ou-cells@groupes.epfl.ch",
 
     "project_name": "my-project",
     "package_name": "{{ cookiecutter.project_name.lower().replace('-', '_') }}",
+    "repository_destination": ["gitlab", "github"],
     "version": "0.1.0.dev0",
     "description": "TODO: write something meaningful here",
-    "team_name": "nse",
-    "repository": "{{ cookiecutter.team_name }}/{{ cookiecutter.project_name }}",
-    "download_url": "git@bbpgitlab.epfl.ch:{{ cookiecutter.repository }}.git",
-    "tracker_url": "https://bbpteam.epfl.ch/project/issues/projects/NSETM/issues",
-    "project_url": "https://bbpteam.epfl.ch/documentation/projects/{{ cookiecutter.project_name }}",
+    "team_name": "neuromath",
+    "repository": "{%- if cookiecutter.repository_destination == 'github' -%}BlueBrain/{{ cookiecutter.project_name }}{%- elif cookiecutter.repository_destination == 'gitlab' -%}{{ cookiecutter.team_name }}/{{ cookiecutter.project_name }}{% endif %}",
+    "download_url": "{%- if cookiecutter.repository_destination == 'github' -%}git@github.com:{{ cookiecutter.repository }}.git{%- elif cookiecutter.repository_destination == 'gitlab' -%}git@bbpgitlab.epfl.ch:{{ cookiecutter.repository }}.git{% endif %}",
+    "tracker_url": "{%- if cookiecutter.repository_destination == 'github' -%}https://github.com/{{ cookiecutter.repository }}/issues{%- elif cookiecutter.repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}",
+    "project_url": "{%- if cookiecutter.repository_destination == 'github' -%}https://{{ cookiecutter.project_name }}.readthedocs.io{%- elif cookiecutter.repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ cookiecutter.project_name }}{% endif %}",
 
-    "year": "{% now 'utc', '%Y' %}"
+    "year": "{% now 'utc', '%Y' %}",
+    "today": "{% now 'utc', '%d %B %Y' %}"
 }

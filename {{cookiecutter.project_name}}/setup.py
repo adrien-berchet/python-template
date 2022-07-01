@@ -2,7 +2,8 @@
 import importlib.util
 from pathlib import Path
 
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
 
 spec = importlib.util.spec_from_file_location(
     "{{ cookiecutter.package_name }}.version",
@@ -10,7 +11,7 @@ spec = importlib.util.spec_from_file_location(
 )
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
-VERSION = module.__version__
+VERSION = module.VERSION
 
 setup(
     name="{{ cookiecutter.project_name }}",
@@ -18,8 +19,8 @@ setup(
     author_email="{{ cookiecutter.author_email }}",
     version=VERSION,
     description="{{ cookiecutter.description }}",
-    long_description=Path("README.rst").read_text(encoding="utf-8"),
-    long_description_content_type="text/x-rst",
+    long_description=Path("README.md").read_text(encoding="utf-8"),
+    long_description_content_type="text/markdown",
     url="{{ cookiecutter.project_url }}",
     project_urls={
         "Tracker": "{{ cookiecutter.tracker_url }}",
@@ -29,7 +30,7 @@ setup(
     install_requires=[],
     packages=find_packages(),
     python_requires=">=3.7",
-    extras_require={"docs": ["sphinx", "sphinx-bluebrain-theme"]},
+    extras_require={"docs": ["m2r2", "sphinx", "sphinx-bluebrain-theme"]},
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Education",

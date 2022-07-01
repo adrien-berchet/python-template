@@ -29,12 +29,12 @@ max-attributes=40
 min-public-methods=0
 # Maximum number of public methods for a class (see R0904).
 max-public-methods=60
+
+[SIMILARITIES]
 # checks for similarities and duplicated code. This computation may be
 # memory / CPU intensive, so you should disable it if you experiments some
 # problems.
-#
 
-[SIMILARITIES]
 # Minimum lines number of a similarity.
 min-similarity-lines=25
 # Ignore comments when computing similarities.
@@ -46,7 +46,5 @@ ignore-docstrings=yes
 # List of classes names for which member attributes should not be checked
 # (useful for classes with attributes dynamically set).
 
-#as of numpy 1.8.0, name resolution seems to be a problem.  Ignore lookups in numpy
+# as of numpy 1.8.0, name resolution seems to be a problem. Ignore lookups in numpy
 ignored-classes=numpy,list
-
-extension-pkg-whitelist=numpy,lxml

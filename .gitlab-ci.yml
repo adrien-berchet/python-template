@@ -1,3 +1,32 @@
 include:
   - project: nse/ci
-    file: /ci/pipelines/nse.cookiecutter-python.yml
+    file:
+      - /ci/lib/tox-docker.yml
+      - /ci/jobs/check-version.yml
+      - /ci/jobs/check-packaging.yml
+      - /ci/jobs/lint.yml
+      - /ci/jobs/py37.yml
+      - /ci/jobs/py38.yml
+      - /ci/jobs/py39.yml
+      - /ci/jobs/docs.yml
+
+.tox-template:
+  variables:
+    PIP_PACKAGES: tox cookiecutter
+    PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd my-project"
+
+check-version:
+  variables:
+    PRE_BUILD_COMMAND: !reference [.tox-template, variables, PRE_BUILD_COMMAND]
+
+check-packaging:
+  variables:
+    PRE_BUILD_COMMAND: !reference [.tox-template, variables, PRE_BUILD_COMMAND]
+
+docs:
+  variables:
+    PRE_BUILD_COMMAND: !reference [.tox-template, variables, PRE_BUILD_COMMAND]
+
+lint:
+  variables:
+    PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd my-project && git init"

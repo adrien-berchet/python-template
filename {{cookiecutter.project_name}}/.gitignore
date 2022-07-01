@@ -5,6 +5,7 @@ coverage.xml
 .coverage
 doc/build
 doc/source/generated
+reports
 .tox
 build
 dist
