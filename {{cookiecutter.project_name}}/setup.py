@@ -28,7 +28,7 @@ setup(
     },
     license="BBP-internal-confidential",
     install_requires=[],
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests"]),
     python_requires=">=3.7",
     extras_require={"docs": ["m2r2", "sphinx", "sphinx-bluebrain-theme"]},
     classifiers=[

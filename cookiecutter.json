@@ -2,7 +2,7 @@
     "author_name": "bbp-ou-cells",
     "author_email": "bbp-ou-cells@groupes.epfl.ch",
     "maintainer": "",
-    "project_name": "My Project",
+    "project_name": "My-Project",
     "package_name": "{{ cookiecutter.project_name.lower().replace('-', '_').replace(' ', '_') }}",
     "repository_destination": ["gitlab", "github"],
     "version": "0.1.0.dev0",
