@@ -31,6 +31,9 @@ This template can be used in two ways:
 Then in the two cases you just have to answer to the prompted questions and the new package
 directory will be automatically created afterwards.
 
+Note: You can also use [cruft](https://cruft.github.io) to create the new project so it will be
+easier to update it according to template change in the future.
+
 ### Post cookiecutting steps
 
 After cookie-cutting a new repository, you have manual steps to perform:
