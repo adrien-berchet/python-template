@@ -1,4 +1,4 @@
-"""Sample test file."""
+"""Tests for the {{ cookiecutter.package_name }}.example module."""
 import pytest
 
 from {{ cookiecutter.package_name }} import example

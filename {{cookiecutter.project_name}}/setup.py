@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+"""Setup for the {{ cookiecutter.project_name }} package."""
 import importlib.util
 from pathlib import Path
 

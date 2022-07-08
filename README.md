@@ -37,5 +37,5 @@ After cookie-cutting a new repository, you have manual steps to perform:
 
 1. complete Spack recipe in `extra/spack` and add it to BlueBrain Spack repo:
    https://github.com/BlueBrain/spack#the-bluebrain-spack-deployment
-
 2. the `extra` folder can now be removed
+3. search for `TODO` strings in the repository and replace them by what you need
