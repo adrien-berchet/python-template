@@ -13,7 +13,7 @@ include:
 .tox-template:
   variables:
     PIP_PACKAGES: tox cookiecutter
-    PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd my-project"
+    PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd my_project"
 
 check-version:
   variables:
@@ -29,4 +29,4 @@ docs:
 
 lint:
   variables:
-    PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd my-project && git init"
+    PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd my_project && git init"
