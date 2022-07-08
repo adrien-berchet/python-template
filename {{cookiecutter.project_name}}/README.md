@@ -21,4 +21,4 @@ Board of the Swiss Federal Institutes of Technology.
 
 For license and authors, see `LICENSE.txt` and `AUTHORS.md` respectively.
 
-Copyright © {{ cookiecutter.year - 1 }}-{{ cookiecutter.year }} Blue Brain Project/EPFL{% endif %}
+Copyright © {{ (cookiecutter.year | int) - 1 }}-{{ cookiecutter.year }} Blue Brain Project/EPFL{% endif %}
