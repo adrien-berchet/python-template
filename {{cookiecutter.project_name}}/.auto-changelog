@@ -7,5 +7,5 @@
     "commitUrl": "https://bbpgitlab.epfl.ch/neuromath/{{cookiecutter.project_name}}/-/commit/{id}",
     "issueUrl": "https://bbpgitlab.epfl.ch/neuromath/{{cookiecutter.project_name}}/issues/{id}",
     "mergeUrl": "https://bbpgitlab.epfl.ch/neuromath/{{cookiecutter.project_name}}/merge-requests/{id}",
-    "compareUrl": "https://bbpgitlab.epfl.ch/neuromath/{{cookiecutter.project_name}}/compare/{from}...{to}",
+    "compareUrl": "https://bbpgitlab.epfl.ch/neuromath/{{cookiecutter.project_name}}/compare/{from}...{to}"
 }
