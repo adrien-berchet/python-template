@@ -5,15 +5,28 @@ include:
       - /ci/jobs/check-version.yml
       - /ci/jobs/check-packaging.yml
       - /ci/jobs/lint.yml
+      - /ci/jobs/docs.yml
+  - project: neuromath/ci
+    file:
+      - /ci/lib/pytest-template.yml
       - /ci/jobs/py37.yml
       - /ci/jobs/py38.yml
       - /ci/jobs/py39.yml
-      - /ci/jobs/docs.yml
+      - /ci/jobs/coverage.yml
 
 .tox-template:
   variables:
     PIP_PACKAGES: tox cookiecutter
     PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd My-Project"
+
+.pytest-template:
+  variables:
+    COVERAGE_FILE: .coverage-${CI_JOB_NAME}
+  artifacts:
+    reports:
+      junit: My-Project/reports/pytest-${CI_JOB_NAME}.xml
+    paths:
+      - My-Project/.coverage-${CI_JOB_NAME}
 
 check-version:
   variables:
@@ -30,3 +43,10 @@ docs:
 lint:
   variables:
     PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd My-Project && git init"
+
+coverage:
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: My-Project/coverage.xml
