@@ -13,5 +13,6 @@
     "tracker_url": "{%- if cookiecutter.repository_destination == 'github' -%}https://github.com/{{ cookiecutter.repository }}/issues{%- elif cookiecutter.repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}",
     "project_url": "{%- if cookiecutter.repository_destination == 'github' -%}https://{{ cookiecutter.project_name }}.readthedocs.io{%- elif cookiecutter.repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ cookiecutter.project_name }}{% endif %}",
     "year": "{% now 'utc', '%Y' %}",
-    "today": "{% now 'utc', '%d %B %Y' %}"
+    "today": "{% now 'utc', '%d %B %Y' %}",
+    "support_py37": ["yes", "no"]
 }

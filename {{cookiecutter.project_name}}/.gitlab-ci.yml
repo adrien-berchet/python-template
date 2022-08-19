@@ -14,8 +14,8 @@ include:
      file:
         - /ci/jobs/auto-release.yml
         - /ci/jobs/check-merge-request-title.yml
-        - /ci/lib/pytest-template.yml
-        - /ci/jobs/py37.yml
+        - /ci/lib/pytest-template.yml{% if cookiecutter.support_py37 == 'yes' %}
+        - /ci/jobs/py37.yml{% endif %}
         - /ci/jobs/py38.yml
         - /ci/jobs/py39.yml
         - /ci/jobs/coverage.yml

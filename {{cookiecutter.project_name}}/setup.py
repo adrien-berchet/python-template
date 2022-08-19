@@ -29,7 +29,7 @@ setup(
     license="BBP-internal-confidential",
     install_requires=[],
     packages=find_packages(exclude=["tests"]),
-    python_requires=">=3.7",
+    python_requires={% if cookiecutter.support_py37 == 'yes' %}">=3.7"{% else %}">=3.8"{% endif %},
     extras_require={
         "docs": ["m2r2", "sphinx", "sphinx-bluebrain-theme"],
         "test": [
@@ -44,8 +44,8 @@ setup(
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3",{% if cookiecutter.support_py37 == 'yes' %}
+        "Programming Language :: Python :: 3.7",{% endif %}
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Topic :: Scientific/Engineering :: Bio-Informatics",

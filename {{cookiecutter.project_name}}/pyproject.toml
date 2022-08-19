@@ -4,8 +4,8 @@ requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
 
 [tool.black]
 line-length = 100
-target-version = [
-    'py37',
+target-version = [{% if cookiecutter.support_py37 == 'yes' %}
+    'py37',{% endif %}
     'py38',
     'py39',
 ]
