@@ -1,7 +1,0 @@
-Maintainer
-----------
-
-{{cookiecutter.maintainer}}
-
-Contributors
-------------

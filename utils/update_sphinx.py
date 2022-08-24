@@ -1,23 +1,21 @@
-"""Utilities for updating the docs cookiecutter content."""
-
+"""Utilities for updating the docs template content."""
+import distutils.dir_util
 import os
 import pathlib
 import re
-import distutils.dir_util
 import tempfile
 
 import click
 import sphinx.cmd.quickstart
 
-
 # addtional configuration to be appended to the conf.py
 ADDITIONAL_CONF = """
 
 html_theme_options = {
-    'metadata_distribution': '{{ cookiecutter.package_name }}',
+    'metadata_distribution': '{{ package_name }}',
 }
 
-html_title = u'{{ cookiecutter.project_name }}'
+html_title = u'{{ project_name }}'
 
 # If true, links to the reST sources are added to the pages.
 html_show_sourcelink = False
@@ -27,11 +25,11 @@ DEFAULT_THEME = "alabaster"
 
 
 def _do_replacements(content):
-    """Replace portions of the conf.py"""
+    """Replace portions of the conf.py."""
     # replace version placeholders
     content = content.replace(
         "'VERSION-PLACEHOLDER'",
-        "get_distribution('{{ cookiecutter.package_name }}').version",
+        "get_distribution('{{ package_name }}').version",
         1,
     )
     content = content.replace("'VERSION-PLACEHOLDER'", "version")
@@ -45,13 +43,13 @@ def _do_replacements(content):
     static_re = re.compile(r"^html_static_path.*", flags=re.MULTILINE)
     if static_re.search(content) is None:
         raise ValueError("Expected 'html_static_path' config variable not found")
-    content = static_re.sub("# \g<0>", content)
+    content = static_re.sub(r"# \g<0>", content)
 
     # comment out the template path
     templates_re = re.compile(r"^templates_path.*", flags=re.MULTILINE)
     if templates_re.search(content) is None:
         raise ValueError("Expected 'templates_path' config variable not found")
-    content = templates_re.sub("# \g<0>", content)
+    content = templates_re.sub(r"# \g<0>", content)
 
     # remove the copyright which is injected by the theme
     copyright_re = re.compile(r"^copyright.*\n", flags=re.MULTILINE)
@@ -65,14 +63,6 @@ def _do_replacements(content):
         raise ValueError("Expected 'author' config variable not found")
     content = author_re.sub("", content)
 
-    # add the get_distribution import
-    import_re = re.compile(r"(import sys.*?\n)(\n)", flags=re.DOTALL)
-    if import_re.search(content) is None:
-        raise ValueError("Expected 'import sys' in conf.py not found")
-    content = import_re.sub(
-        "\g<1>\nfrom pkg_resources import get_distribution\n\n", content
-    )
-
     return content
 
 
@@ -81,12 +71,12 @@ def _do_replacements(content):
     "--output-path", required=True, type=click.Path(file_okay=False, exists=True)
 )
 def main(output_path):
-    """Generate quickstart content, modify, and update the cookiecutter."""
+    """Generate quickstart content, modify, and update the template."""
     with tempfile.TemporaryDirectory(prefix="sphinx-quickstart") as tempdir:
         quickstart_args = [
             "--quiet",
             "--project",
-            "{{ cookiecutter.project_name }}",
+            "{{ project_name }}",
             "--author",
             "NSE",
             "-v",

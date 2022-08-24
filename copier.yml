@@ -1,0 +1,99 @@
+author_name:
+  type: str
+  help: The name of the author
+  default: bbp-ou-cells
+author_email:
+  type: str
+  help: The contact email of the maintainers
+  default: bbp-ou-cells@groupes.epfl.ch
+maintainer:
+  type: str
+  help: The name of the current maintainer
+project_name:
+  type: str
+  help: The name of the project
+  default: My-Project
+package_name:
+  type: str
+  help: The name of the Python package
+  default: "{{ project_name.lower().replace('-', '_').replace(' ', '_') }}"
+repository_destination:
+  type: str
+  help: The destination platform used to store the repository
+  choices:
+    - gitlab
+    - github
+  default: gitlab
+version:
+  type: str
+  help: The default first version
+  default: 0.1.0.dev0
+description:
+  type: str
+  help: The short description of the project
+  default: "TODO: write something meaningful here"
+team_name:
+  type: str
+  help: The name of the team
+  default: neuromath
+repository:
+  type: str
+  help: The repository name (with optional organization)
+  default: "{%- if repository_destination == 'github' -%}BlueBrain/{{ project_name }}{%- elif repository_destination == 'gitlab' -%}{{ team_name }}/{{ project_name }}{% endif %}"
+  placeholder: "{%- if repository_destination == 'github' -%}BlueBrain/{{ project_name }}{%- elif repository_destination == 'gitlab' -%}{{ team_name }}/{{ project_name }}{% endif %}"
+download_url:
+  type: str
+  help: The download URL
+  default: "{%- if repository_destination == 'github' -%}git@github.com:{{ repository }}.git{%- elif repository_destination == 'gitlab' -%}git@bbpgitlab.epfl.ch:{{ repository }}.git{% endif %}"
+  placeholder: "{%- if repository_destination == 'github' -%}git@github.com:{{ repository }}.git{%- elif repository_destination == 'gitlab' -%}git@bbpgitlab.epfl.ch:{{ repository }}.git{% endif %}"
+tracker_url:
+  type: str
+  help: The tracker URL
+  default: "{%- if repository_destination == 'github' -%}https://github.com/{{ repository }}/issues{%- elif repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
+  placeholder: "{%- if repository_destination == 'github' -%}https://github.com/{{ repository }}/issues{%- elif repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
+project_url:
+  type: str
+  help: The documentation URL
+  default: "{%- if repository_destination == 'github' -%}https://{{ project_name }}.readthedocs.io{%- elif repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ project_name }}{% endif %}"
+  placeholder: "{%- if repository_destination == 'github' -%}https://{{ project_name }}.readthedocs.io{%- elif repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ project_name }}{% endif %}"
+year:
+  type: str
+  help: The year when the repository was created
+  default: "{% now 'utc', '%Y' %}"
+today:
+  type: str
+  help: The date used for the first version
+  default: "{% now 'utc', '%d %B %Y' %}"
+support_py37:
+  type: bool
+  help: Should the project support py37?
+  choices:
+    "yes": true
+    "no": false
+  default: "yes"
+init_git:
+  type: bool
+  help: Should git be initialized?
+  choices:
+    "yes": true
+    "no": false
+  default: "yes"
+
+_subdirectory:
+  template
+_jinja_extensions:
+  - copier_templates_extensions.TemplateExtensionLoader
+  - extensions/context.py:ContextUpdater
+  - jinja2_time.TimeExtension
+_exclude:
+  - "*.py[co]"
+  - ".DS_Store"
+  - ".git"
+  - ".svn"
+  - ".tox"
+  - "__pycache__"
+  - "copier.yaml"
+  - "copier.yml"
+  - "~*"
+_tasks:
+    - "{%- if init_git -%}git init; git add --all; git remote add origin {{ download_url }}{% else %}{% endif %}"

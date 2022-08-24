@@ -6,6 +6,7 @@ include:
       - /ci/jobs/check-packaging.yml
       - /ci/jobs/lint.yml
       - /ci/jobs/docs.yml
+      - /ci/jobs/tag.yml
   - project: neuromath/ci
     file:
       - /ci/lib/pytest-template.yml
@@ -16,8 +17,10 @@ include:
 
 .tox-template:
   variables:
-    PIP_PACKAGES: tox cookiecutter
-    PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd My-Project"
+    PIP_PACKAGES: tox copier copier-templates-extensions jinja2-time
+    PRE_BUILD_COMMAND: "git config --global user.name '$GITLAB_USER_NAME'; git config --global user.email '$GITLAB_USER_EMAIL'; copier --vcs-ref=HEAD --overwrite --defaults . My-Project; cd My-Project; git init; git add --all; git commit -m 'Initial commit';"
+    KUBERNETES_MEMORY_LIMIT: 6Gi
+    KUBERNETES_MEMORY_REQUEST: 6Gi
 
 .pytest-template:
   variables:
@@ -42,7 +45,7 @@ docs:
 
 lint:
   variables:
-    PRE_BUILD_COMMAND: "cookiecutter --overwrite-if-exists --no-input . && cd My-Project && git init"
+    PRE_BUILD_COMMAND: !reference [.tox-template, variables, PRE_BUILD_COMMAND]
 
 coverage:
   artifacts:

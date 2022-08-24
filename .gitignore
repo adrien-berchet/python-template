@@ -1,2 +1,5 @@
-.tox/
+.tox
 .idea
+local_config
+My-Project
+venv
