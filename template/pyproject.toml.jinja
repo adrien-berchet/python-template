@@ -1,16 +1,32 @@
 # pyproject.toml
 [build-system]
-requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "setuptools_scm[toml]>=3.4",
+]
 
+# BLACK
 [tool.black]
 line-length = 100
 target-version = [{% if support_py37 %}
-    'py37',{% endif %}
-    'py38',
-    'py39',
+    "py37",{% endif %}
+    "py38",
+    "py39",
 ]
-include = '{{ package_name }}\/.*\.py$|tests\/.*\.py$|doc\/source\/conf\.py$|setup\.py$'
+include = '{{ package_name }}\/.*\.py$|tests\/.*\.py$|docs\/source\/conf\.py$|setup\.py$'
 
+# PYDOCSTYLE
+[tool.pydocstyle]
+# ignore the following:
+#   - D107: Missing docstring in __init__
+add-ignore = [
+    "D107",
+]
+convention = "google"
+match = "[{{ package_name }}, tests, docs/source/conf.py, setup.py]"
+
+# ISORT
 [tool.isort]
 profile = "black"
 line_length = 100

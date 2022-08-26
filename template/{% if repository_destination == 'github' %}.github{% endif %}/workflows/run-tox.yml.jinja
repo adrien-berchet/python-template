@@ -1,4 +1,4 @@
-{% raw %}name: Run all tox python3
+{% raw %}name: Run all tox jobs using Python3
 
 on:
   pull_request:
@@ -22,7 +22,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        sudo apt-get update
         python -m pip install --upgrade pip setuptools
         pip install tox-gh-actions
     - name: Run tox
@@ -39,4 +38,4 @@ jobs:
         fail_ci_if_error: false
         files: ./reports/coverage-*.xml
         flags: pytest
-        name: "{% endraw %}{{ package_name }}{% raw %}-py${{ matrix.python-version }}"{% endraw %}
+        name: "{% endraw %}{{ project_name }}{% raw %}-py${{ matrix.python-version }}"{% endraw %}

@@ -6,13 +6,15 @@ from setuptools import setup
 
 def my_version():
     from setuptools_scm.version import guess_next_version
+
     def clean_local_scheme(version):
-        return "" if not version.dirty else '+dirty'
+        return "" if not version.dirty else "+dirty"
 
     def clean_scheme(version):
         return guess_next_version(version)
 
-    return {'version_scheme': clean_scheme, 'local_scheme': clean_local_scheme}
+    return {"version_scheme": clean_scheme, "local_scheme": clean_local_scheme}
+
 
 setup(
     name="python-template",

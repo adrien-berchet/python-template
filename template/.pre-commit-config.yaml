@@ -9,6 +9,7 @@ repos:
       - id: check-merge-conflict
       - id: check-symlinks
       - id: check-yaml
+        exclude: '.gitlab-ci.yml'
       - id: debug-statements
       - id: end-of-file-fixer
       - id: trailing-whitespace

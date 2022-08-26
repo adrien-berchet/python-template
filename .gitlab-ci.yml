@@ -2,22 +2,12 @@ include:
   - project: nse/ci
     file:
       - /ci/lib/tox-docker.yml
-      - /ci/jobs/check-version.yml
-      - /ci/jobs/check-packaging.yml
-      - /ci/jobs/lint.yml
-      - /ci/jobs/docs.yml
   - project: neuromath/ci
     file:
       - /ci/lib/pytest-template.yml
-      - /ci/jobs/py37.yml
-      - /ci/jobs/py38.yml
-      - /ci/jobs/py39.yml
-      - /ci/jobs/coverage.yml
 
 .tox-template:
   variables:
-    PIP_PACKAGES: tox copier copier-templates-extensions jinja2-time
-    PRE_BUILD_COMMAND: "git config --global user.name '$GITLAB_USER_NAME'; git config --global user.email '$GITLAB_USER_EMAIL'; copier --vcs-ref=HEAD --overwrite --defaults . My-Project; cd My-Project; git init; git add --all; git commit -m 'Initial commit';"
     KUBERNETES_MEMORY_LIMIT: 6Gi
     KUBERNETES_MEMORY_REQUEST: 6Gi
 
@@ -30,28 +20,17 @@ include:
     paths:
       - My-Project/.coverage-${CI_JOB_NAME}
 
-check-version:
-  variables:
-    PRE_BUILD_COMMAND: !reference [.tox-template, variables, PRE_BUILD_COMMAND]
+py37-gitlab-with-py37:
+  extends: .pytest-template
 
-check-packaging:
-  variables:
-    PRE_BUILD_COMMAND: !reference [.tox-template, variables, PRE_BUILD_COMMAND]
+py38-gitlab-without-py37:
+  extends: .pytest-template
 
-docs:
-  variables:
-    PRE_BUILD_COMMAND: !reference [.tox-template, variables, PRE_BUILD_COMMAND]
+py37-github-with-py37:
+  extends: .pytest-template
 
-lint:
-  variables:
-    PRE_BUILD_COMMAND: !reference [.tox-template, variables, PRE_BUILD_COMMAND]
-
-coverage:
-  artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: My-Project/coverage.xml
+py38-github-without-py37:
+  extends: .pytest-template
 
 # Create a tag with SemVer format
 .do-tag: &do-tag

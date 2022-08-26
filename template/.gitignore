@@ -26,10 +26,10 @@ coverage.xml
 venv
 test_venv
 
-# doc
-doc/build
-doc/source/generated
-doc/source/examples
+# docs
+docs/build
+docs/source/generated
+docs/source/examples
 
 # reports
 reports

@@ -69,6 +69,16 @@ html_title = project
 # If true, links to the reST sources are added to the pages.
 html_show_sourcelink = False
 
+# autosummary settings
+autosummary_generate = True
+
+# autodoc settings
+autodoc_typehints = "signature"
+autodoc_default_options = {
+    "members": True,
+    "show-inheritance": True,
+}
+
 intersphinx_mapping = {
     # Uncomment these lines if you need them
     # "numpy": ("https://numpy.org/doc/stable/", None),

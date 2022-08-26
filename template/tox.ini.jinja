@@ -1,22 +1,24 @@
 [base]
 name = {{ package_name }}
-files = {[base]name} tests doc/source/conf.py setup.py
+files = {[base]name} tests docs/source/conf.py setup.py
 
 [tox]
-envlist =
-    check-version
+envlist ={% if repository_destination == 'gitlab' %}
+    check-version{% endif %}
     check-packaging
     lint
     docs
     {{ 'py{' }}{% if support_py37 %}37,{% endif %}38,39}
+    coverage
 
 minversion = 3.18
 
 [testenv]
 extras = test
 setenv =
-    PIP_EXTRA_INDEX_URL = https://bbpteam.epfl.ch/repository/devpi/simple
     COVERAGE_FILE = {env:COVERAGE_FILE:.coverage-{envname}}
+passenv =
+    PIP_EXTRA_INDEX_URL
 commands = pytest \
     --basetemp={envtmpdir} \
     --cov={[base]name} \
@@ -52,7 +54,6 @@ skip_install = true
 deps =
     wheel
     twine
-    setuptools_scm[toml]>=3.4
 commands =
     python setup.py sdist bdist_wheel -d {envtmpdir}/dist
     twine check {envtmpdir}/dist/*
@@ -77,22 +78,12 @@ commands =
     pre-commit run --all-files
 
 [testenv:docs]
-changedir = doc
+basepython = python3.9
+changedir = docs
 extras = docs
 allowlist_externals = make
 # set warnings as errors using the -W sphinx option
-commands = make html SPHINXOPTS=-W
-
-[flake8]
-max-line-length = 100
-ignore = E203,W503
-
-[pydocstyle]
-# ignore the following
-#   - D107: Missing docstring in __init__
-add-ignore = D107
-convention = google
-match = '{{ package_name }}\/.*\.py$|tests\/.*\.py$|doc\/source\/conf\.py$|setup\.py$'{% if repository_destination == 'github' %}
+commands = make html SPHINXOPTS=-W{% if repository_destination == 'github' %}
 
 [gh-actions]
 python ={% if support_py37 %}
