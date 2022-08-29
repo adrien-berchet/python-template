@@ -26,7 +26,6 @@ setup(
         "Source": "{% if repository_provider == 'gitlab' %}{{ download_url }}{% else %}https://github.com/{{ repository }}{% endif %}",
     },
     license="{{ copyright_license }}",
-    install_requires=[],
     packages=find_packages(exclude=["tests"]),
     python_requires={% if support_py37 %}">=3.7"{% else %}">=3.8"{% endif %},{% if repository_provider == 'gitlab' %}
     version=VERSION,{% else %}
@@ -34,6 +33,7 @@ setup(
     setup_requires=[
         "setuptools_scm",
     ],{% endif %}
+    install_requires=[],
     extras_require={
         "docs": ["m2r2", "sphinx", "sphinx-bluebrain-theme"],
         "test": [
