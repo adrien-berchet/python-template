@@ -1,4 +1,7 @@
-"""{{ project_name }} package."""
+"""{{ project_name }} package.
+
+{{ project_description }}
+"""
 {% if support_py37 %}import pkg_resources
 
 __version__ = pkg_resources.get_distribution("{{ project_name }}").version{% else %}import importlib.metadata

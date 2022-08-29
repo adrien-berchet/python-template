@@ -3,7 +3,7 @@ name = {{ package_name }}
 files = {[base]name} tests docs/source/conf.py setup.py
 
 [tox]
-envlist ={% if repository_destination == 'gitlab' %}
+envlist ={% if repository_provider == 'gitlab' %}
     check-version{% endif %}
     check-packaging
     lint
@@ -40,7 +40,7 @@ allowlist_externals = /bin/bash
 commands =
     /bin/bash -c 'coverage combine .coverage-py*'
     coverage xml
-    coverage report{% if repository_destination == 'gitlab' %}
+    coverage report{% if repository_provider == 'gitlab' %}
 
 [testenv:check-version]
 skip_install = true
@@ -83,7 +83,7 @@ changedir = docs
 extras = docs
 allowlist_externals = make
 # set warnings as errors using the -W sphinx option
-commands = make html SPHINXOPTS=-W{% if repository_destination == 'github' %}
+commands = make html SPHINXOPTS=-W{% if repository_provider == 'github' %}
 
 [gh-actions]
 python ={% if support_py37 %}

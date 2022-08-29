@@ -1,9 +1,9 @@
-"""Setup for the {{ project_name }} package."""{% if repository_destination == 'gitlab' %}
+"""Setup for the {{ project_name }} package."""{% if repository_provider == 'gitlab' %}
 import importlib.util{% endif %}
 from pathlib import Path
 
 from setuptools import find_packages
-from setuptools import setup{% if repository_destination == 'gitlab' %}
+from setuptools import setup{% if repository_provider == 'gitlab' %}
 
 spec = importlib.util.spec_from_file_location(
     "{{ package_name }}.version",
@@ -15,20 +15,20 @@ VERSION = module.VERSION{% endif %}
 
 setup(
     name="{{ project_name }}",
-    author="{{ author_name }}",{% if repository_destination == 'gitlab' %}
+    author="{{ author_name }}",{% if repository_provider == 'gitlab' %}
     author_email="{{ author_email }}",{% endif %}
-    description="{{ description }}",
+    description="{{ project_description }}",
     long_description=Path("README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
     url="{{ project_url }}",
     project_urls={
         "Tracker": "{{ tracker_url }}",
-        "Source": "{% if repository_destination == 'gitlab' %}{{ download_url }}{% else %}https://github.com/{{ repository }}{% endif %}",
+        "Source": "{% if repository_provider == 'gitlab' %}{{ download_url }}{% else %}https://github.com/{{ repository }}{% endif %}",
     },
-    license="BBP-internal-confidential",
+    license="{{ copyright_license }}",
     install_requires=[],
     packages=find_packages(exclude=["tests"]),
-    python_requires={% if support_py37 %}">=3.7"{% else %}">=3.8"{% endif %},{% if repository_destination == 'gitlab' %}
+    python_requires={% if support_py37 %}">=3.7"{% else %}">=3.8"{% endif %},{% if repository_provider == 'gitlab' %}
     version=VERSION,{% else %}
     use_scm_version=True,
     setup_requires=[

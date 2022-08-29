@@ -1,3 +1,11 @@
+project_name:
+  type: str
+  help: The name of the project
+  default: My-Project
+project_description:
+  type: str
+  help: The short description of the project
+  default: "TODO: write something meaningful here"
 author_name:
   type: str
   help: The name of the author
@@ -9,15 +17,15 @@ author_email:
 maintainer:
   type: str
   help: The name of the current maintainer
-project_name:
+team_name:
   type: str
-  help: The name of the project
-  default: My-Project
+  help: The name of the team
+  default: neuromath
 package_name:
   type: str
   help: The name of the Python package
   default: "{{ project_name.lower().replace('-', '_').replace(' ', '_') }}"
-repository_destination:
+repository_provider:
   type: str
   help: The destination platform used to store the repository
   choices:
@@ -28,38 +36,43 @@ version:
   type: str
   help: The default first version
   default: 0.1.0.dev0
-description:
-  type: str
-  help: The short description of the project
-  default: "TODO: write something meaningful here"
-team_name:
-  type: str
-  help: The name of the team
-  default: neuromath
 repository:
   type: str
   help: The repository name (with optional organization)
-  default: "{%- if repository_destination == 'github' -%}BlueBrain/{{ project_name }}{%- elif repository_destination == 'gitlab' -%}{{ team_name }}/{{ project_name }}{% endif %}"
-  placeholder: "{%- if repository_destination == 'github' -%}BlueBrain/{{ project_name }}{%- elif repository_destination == 'gitlab' -%}{{ team_name }}/{{ project_name }}{% endif %}"
+  default: "{%- if repository_provider == 'github' -%}BlueBrain/{{ project_name }}{%- elif repository_provider == 'gitlab' -%}{{ team_name }}/{{ project_name }}{% endif %}"
+  placeholder: "{%- if repository_provider == 'github' -%}BlueBrain/{{ project_name }}{%- elif repository_provider == 'gitlab' -%}{{ team_name }}/{{ project_name }}{% endif %}"
 download_url:
   type: str
   help: The download URL
-  default: "{%- if repository_destination == 'github' -%}git@github.com:{{ repository }}.git{%- elif repository_destination == 'gitlab' -%}git@bbpgitlab.epfl.ch:{{ repository }}.git{% endif %}"
-  placeholder: "{%- if repository_destination == 'github' -%}git@github.com:{{ repository }}.git{%- elif repository_destination == 'gitlab' -%}git@bbpgitlab.epfl.ch:{{ repository }}.git{% endif %}"
+  default: "{%- if repository_provider == 'github' -%}git@github.com:{{ repository }}.git{%- elif repository_provider == 'gitlab' -%}git@bbpgitlab.epfl.ch:{{ repository }}.git{% endif %}"
+  placeholder: "{%- if repository_provider == 'github' -%}git@github.com:{{ repository }}.git{%- elif repository_provider == 'gitlab' -%}git@bbpgitlab.epfl.ch:{{ repository }}.git{% endif %}"
 tracker_url:
   type: str
   help: The tracker URL
-  default: "{%- if repository_destination == 'github' -%}https://github.com/{{ repository }}/issues{%- elif repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
-  placeholder: "{%- if repository_destination == 'github' -%}https://github.com/{{ repository }}/issues{%- elif repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
+  default: "{%- if repository_provider == 'github' -%}https://github.com/{{ repository }}/issues{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
+  placeholder: "{%- if repository_provider == 'github' -%}https://github.com/{{ repository }}/issues{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
 project_url:
   type: str
   help: The documentation URL
-  default: "{%- if repository_destination == 'github' -%}https://{{ project_name }}.readthedocs.io{%- elif repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ project_name }}{% endif %}"
-  placeholder: "{%- if repository_destination == 'github' -%}https://{{ project_name }}.readthedocs.io{%- elif repository_destination == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ project_name }}{% endif %}"
-year:
+  default: "{%- if repository_provider == 'github' -%}https://{{ project_name }}.readthedocs.io{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ project_name }}{% endif %}"
+  placeholder: "{%- if repository_provider == 'github' -%}https://{{ project_name }}.readthedocs.io{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ project_name }}{% endif %}"
+copyright_year:
   type: str
   help: The year when the repository was created
   default: "{% now 'utc', '%Y' %}"
+copyright_license:
+  type: str
+  help: Your project's license
+  default: "{%- if repository_provider == 'gitlab' -%}BBP Internal License{% else %}Apache License 2.0{% endif %}"
+  choices:
+  - Apache License 2.0
+  - BBP Internal License
+  - BSD 3-Clause "New" or "Revised" License
+  - GNU Affero General Public License v3.0
+  - GNU General Public License v3.0
+  - GNU Lesser General Public License v3.0
+  - MIT License
+  - Mozilla Public License 2.0
 today:
   type: str
   help: The date used for the first version

@@ -1,6 +1,6 @@
-# {{project_name}}
+# {{ project_name }}
 
-{{description}}
+{{ project_description }}
 
 
 ## Installation
@@ -10,7 +10,7 @@ TODO: Replace this text by proper installation instructions.
 
 ## Examples
 
-TODO: Provide here some examples on how this software can be used.{% if repository_destination == 'github' %}
+TODO: Provide here some examples on how this software can be used.{% if repository_provider == 'github' %}
 
 
 ## Funding & Acknowledgment
@@ -21,4 +21,4 @@ Board of the Swiss Federal Institutes of Technology.
 
 For license and authors, see `LICENSE.txt` and `AUTHORS.md` respectively.
 
-Copyright © {{ (year | int) - 1 }}-{{ year }} Blue Brain Project/EPFL{% endif %}
+Copyright © {{ (copyright_year | int) - 1 }}-{{ copyright_year }} Blue Brain Project/EPFL{% endif %}
