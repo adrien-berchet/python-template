@@ -1,4 +1,4 @@
-"""Setup for the {{ project_name }} package."""{% if repository_provider == 'gitlab' %}
+"""Setup for the {{ distribution_name }} package."""{% if repository_provider == 'gitlab' %}
 import importlib.util{% endif %}
 from pathlib import Path
 
@@ -13,8 +13,23 @@ module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 VERSION = module.VERSION{% endif %}
 
+reqs = []
+
+doc_reqs = [
+    "m2r2",
+    "sphinx",
+    "sphinx-bluebrain-theme",
+]
+
+test_reqs = [
+    "mock",
+    "pytest",
+    "pytest-cov",
+    "pytest-html",
+]
+
 setup(
-    name="{{ project_name }}",
+    name="{{ distribution_name }}",
     author="{{ author_name }}",{% if repository_provider == 'gitlab' %}
     author_email="{{ author_email }}",{% endif %}
     description="{{ project_description }}",
@@ -23,7 +38,7 @@ setup(
     url="{{ project_url }}",
     project_urls={
         "Tracker": "{{ tracker_url }}",
-        "Source": "{% if repository_provider == 'gitlab' %}{{ download_url }}{% else %}https://github.com/{{ repository }}{% endif %}",
+        "Source": "{{ download_url }}",
     },
     license="{{ copyright_license }}",
     packages=find_packages(exclude=["tests"]),
@@ -33,15 +48,10 @@ setup(
     setup_requires=[
         "setuptools_scm",
     ],{% endif %}
-    install_requires=[],
+    install_requires=reqs,
     extras_require={
-        "docs": ["m2r2", "sphinx", "sphinx-bluebrain-theme"],
-        "test": [
-            "mock",
-            "pytest",
-            "pytest-cov",
-            "pytest-html",
-        ],
+        "docs": doc_reqs,
+        "test": test_reqs,
     },
     classifiers=[
         # TODO: Update to relevant classifiers

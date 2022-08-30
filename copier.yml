@@ -1,30 +1,11 @@
 project_name:
   type: str
   help: The name of the project
-  default: My-Project
+  default: My Project
 project_description:
   type: str
   help: The short description of the project
   default: "TODO: write something meaningful here"
-author_name:
-  type: str
-  help: The name of the author
-  default: bbp-ou-cells
-author_email:
-  type: str
-  help: The contact email of the maintainers
-  default: bbp-ou-cells@groupes.epfl.ch
-maintainer:
-  type: str
-  help: The name of the current maintainer
-team_name:
-  type: str
-  help: The name of the team
-  default: neuromath
-package_name:
-  type: str
-  help: The name of the Python package
-  default: "{{ project_name.lower().replace('-', '_').replace(' ', '_') }}"
 repository_provider:
   type: str
   help: The destination platform used to store the repository
@@ -32,30 +13,61 @@ repository_provider:
     - gitlab
     - github
   default: gitlab
+author_name:
+  type: str
+  help: The name of the author
+  default: "{%- if repository_provider == 'github' -%}Blue Brain Project, EPFL{%- elif repository_provider == 'gitlab' -%}bbp-ou-cells{% endif %}"
+author_email:
+  type: str
+  help: The contact email of the maintainers
+  default: bbp-ou-cells@groupes.epfl.ch
+  when: "{{ repository_provider == 'gitlab' }}"
+maintainer:
+  type: str
+  help: The name of the current maintainer
+team_name:
+  type: str
+  help: The name of the team
+  default: neuromath
+  when: "{{ repository_provider == 'gitlab' }}"
+distribution_name:
+  type: str
+  help: Your Python package distribution name (for `pip install NAME`)
+  default: "{{ project_name.replace('_', '-').replace(' ', '-') }}"
+package_name:
+  type: str
+  help: The name of the Python package
+  default: "{{ project_name.lower().replace('-', '_').replace(' ', '_') }}"
 version:
   type: str
   help: The default first version
   default: 0.1.0.dev0
-repository:
+  when: "{{ repository_provider == 'gitlab' }}"
+repository_namespace:
   type: str
-  help: The repository name (with optional organization)
-  default: "{%- if repository_provider == 'github' -%}BlueBrain/{{ project_name }}{%- elif repository_provider == 'gitlab' -%}{{ team_name }}/{{ project_name }}{% endif %}"
-  placeholder: "{%- if repository_provider == 'github' -%}BlueBrain/{{ project_name }}{%- elif repository_provider == 'gitlab' -%}{{ team_name }}/{{ project_name }}{% endif %}"
+  help: The repository namespace (user name or organization)
+  default: "{%- if repository_provider == 'github' -%}BlueBrain{%- elif repository_provider == 'gitlab' -%}{{ team_name }}{% endif %}"
+  placeholder: "{%- if repository_provider == 'github' -%}BlueBrain{%- elif repository_provider == 'gitlab' -%}{{ team_name }}{% endif %}"
+repository_name:
+  type: str
+  help: The repository name
+  default: "{{ distribution_name }}"
+  placeholder: "{{ distribution_name }}"
 download_url:
   type: str
   help: The download URL
-  default: "{%- if repository_provider == 'github' -%}git@github.com:{{ repository }}.git{%- elif repository_provider == 'gitlab' -%}git@bbpgitlab.epfl.ch:{{ repository }}.git{% endif %}"
-  placeholder: "{%- if repository_provider == 'github' -%}git@github.com:{{ repository }}.git{%- elif repository_provider == 'gitlab' -%}git@bbpgitlab.epfl.ch:{{ repository }}.git{% endif %}"
+  default: "https://{%- if repository_provider == 'github' -%}github.com{%- elif repository_provider == 'gitlab' -%}bbpgitlab.epfl.ch{% endif %}/{{ repository_namespace }}/{{ repository_name }}"
+  placeholder: "https://{%- if repository_provider == 'github' -%}github.com{%- elif repository_provider == 'gitlab' -%}bbpgitlab.epfl.ch{% endif %}/{{ repository_namespace }}/{{ repository_name }}"
 tracker_url:
   type: str
   help: The tracker URL
-  default: "{%- if repository_provider == 'github' -%}https://github.com/{{ repository }}/issues{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
-  placeholder: "{%- if repository_provider == 'github' -%}https://github.com/{{ repository }}/issues{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
+  default: "{%- if repository_provider == 'github' -%}https://github.com/{{ repository_namespace }}/{{ repository_name }}/issues{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
+  placeholder: "{%- if repository_provider == 'github' -%}https://github.com/{{ repository_namespace }}/{{ repository_name }}/issues{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/project/issues/projects/CELLS/issues{% endif %}"
 project_url:
   type: str
   help: The documentation URL
-  default: "{%- if repository_provider == 'github' -%}https://{{ project_name }}.readthedocs.io{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ project_name }}{% endif %}"
-  placeholder: "{%- if repository_provider == 'github' -%}https://{{ project_name }}.readthedocs.io{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ project_name }}{% endif %}"
+  default: "{%- if repository_provider == 'github' -%}https://{{ distribution_name }}.readthedocs.io{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ distribution_name }}{% endif %}"
+  placeholder: "{%- if repository_provider == 'github' -%}https://{{ distribution_name }}.readthedocs.io{%- elif repository_provider == 'gitlab' -%}https://bbpteam.epfl.ch/documentation/projects/{{ distribution_name }}{% endif %}"
 copyright_year:
   type: str
   help: The year when the repository was created
@@ -73,10 +85,6 @@ copyright_license:
   - GNU Lesser General Public License v3.0
   - MIT License
   - Mozilla Public License 2.0
-today:
-  type: str
-  help: The date used for the first version
-  default: "{% now 'utc', '%d %B %Y' %}"
 support_py37:
   type: bool
   help: Should the project support py37?
@@ -91,6 +99,12 @@ init_git:
     "yes": true
     "no": false
   default: "yes"
+ssh_url:
+  type: str
+  help: The download URL to set the remote of the git repository
+  default: "{%- if repository_provider == 'github' -%}git@github.com:{%- elif repository_provider == 'gitlab' -%}git@bbpgitlab.epfl.ch:{% endif %}{{ repository_namespace }}/{{ repository_name }}.git"
+  placeholder: "{%- if repository_provider == 'github' -%}git@github.com:{%- elif repository_provider == 'gitlab' -%}git@bbpgitlab.epfl.ch:{% endif %}{{ repository_namespace }}/{{ repository_name }}.git"
+  when: "{{ init_git is true }}"
 
 _subdirectory:
   template
@@ -109,4 +123,4 @@ _exclude:
   - "copier.yml"
   - "~*"
 _tasks:
-    - "{%- if init_git -%}git init; git add --all; git remote add origin {{ download_url }}{% else %}{% endif %}"
+    - "{%- if init_git -%}git init; git add --all; git remote add origin {{ ssh_url }}{% else %}{% endif %}"

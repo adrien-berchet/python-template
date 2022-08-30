@@ -38,4 +38,4 @@ jobs:
         fail_ci_if_error: false
         files: ./reports/coverage-*.xml
         flags: pytest
-        name: "{% endraw %}{{ project_name }}{% raw %}-py${{ matrix.python-version }}"{% endraw %}
+        name: "{% endraw %}{{ distribution_name }}{% raw %}-py${{ matrix.python-version }}"{% endraw %}

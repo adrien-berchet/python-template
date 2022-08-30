@@ -2,9 +2,9 @@
 
 <!-- This file should be auto-generated using the auto-changelog command (https://www.npmjs.com/package/auto-changelog) -->
 
-## {{project_name}}-v0.1.0
+## {% if repository_provider == 'gitlab' %}{{ distribution_name }}-v{% endif %}{{ version }}
 
-> {{today}}
+> {% now 'utc', '%d %B %Y' %}
 
 ### New Features
 

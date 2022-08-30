@@ -1,16 +1,16 @@
 {
     "output": "CHANGELOG.md",
     "template": ".auto-changelog-template.hbs",{% if repository_provider == 'gitlab' %}
-    "tagPrefix": "{{ project_name }}-v",{% endif %}
+    "tagPrefix": "{{ distribution_name }}-v",{% endif %}
     "commitLimit": false,
     "backfillLimit": false,
     "ignoreCommitPattern": "Release [0-9]+\\.[0-9]+\\.[0-9]+|Update CHANGELOG.*|.*\\[skip-changelog\\].*|\\[pre-commit.ci\\]",{%- if repository_provider == 'gitlab' -%}
-    "commitUrl": "https://bbpgitlab.epfl.ch/neuromath/{{ project_name }}/-/commit/{id}",
-    "issueUrl": "https://bbpgitlab.epfl.ch/neuromath/{{ project_name }}/issues/{id}",
-    "mergeUrl": "https://bbpgitlab.epfl.ch/neuromath/{{ project_name }}/merge-requests/{id}",
-    "compareUrl": "https://bbpgitlab.epfl.ch/neuromath/{{ project_name }}/compare/{from}...{to}"{% else %}
-    "commitUrl": "https://github.com/{{ repository }}/commit/{id}",
-    "issueUrl": "https://github.com/{{ repository }}/issues/{id}",
-    "mergeUrl": "https://github.com/{{ repository }}/pull/{id}",
-    "compareUrl": "https://github.com/{{ repository }}/compare/{from}..{to}"{% endif %}
+    "commitUrl": "https://bbpgitlab.epfl.ch/{{ repository_namespace }}/{{ repository_name }}/-/commit/{id}",
+    "issueUrl": "https://bbpgitlab.epfl.ch/{{ repository_namespace }}/{{ repository_name }}/issues/{id}",
+    "mergeUrl": "https://bbpgitlab.epfl.ch/{{ repository_namespace }}/{{ repository_name }}/merge-requests/{id}",
+    "compareUrl": "https://bbpgitlab.epfl.ch/{{ repository_namespace }}/{{ repository_name }}/compare/{from}...{to}"{% else %}
+    "commitUrl": "https://github.com/{{ repository_namespace }}/{{ repository_name }}/commit/{id}",
+    "issueUrl": "https://github.com/{{ repository_namespace }}/{{ repository_name }}/issues/{id}",
+    "mergeUrl": "https://github.com/{{ repository_namespace }}/{{ repository_name }}/pull/{id}",
+    "compareUrl": "https://github.com/{{ repository_namespace }}/{{ repository_name }}/compare/{from}..{to}"{% endif %}
 }

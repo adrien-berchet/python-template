@@ -17,7 +17,7 @@
 project = "{{ project_name }}"
 
 # The short X.Y version
-version = {% if support_py37 %}get_distribution("{{ package_name }}").version{% else %}metadata.version("{{ package_name }}"){% endif %}
+version = {% if support_py37 %}get_distribution("{{ distribution_name }}").version{% else %}metadata.version("{{ distribution_name }}"){% endif %}
 
 # The full version, including alpha/beta/rc tags
 release = version
@@ -61,7 +61,7 @@ html_theme = "sphinx-bluebrain-theme"
 # html_static_path = ['_static']
 
 html_theme_options = {
-    "metadata_distribution": project,
+    "metadata_distribution": "{{ distribution_name }}",
 }
 
 html_title = project

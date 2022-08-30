@@ -14,7 +14,7 @@ class Py_{{ package_name }}(PythonPackage):
     git = "{{ download_url }}"
 
     version("develop", branch="master")
-    version("{{ version }}", tag="{{ project_name }}-v{{ version }}")
+    version("{{ version }}", tag="{% if repository_provider == 'gitlab' %}{{ distribution_name }}-v{% endif %}{{ version }}")
 
     depends_on("py-setuptools", type="build")
     # type=("build", "run") if specifying entry points in "setup.py"
