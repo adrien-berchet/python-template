@@ -75,16 +75,16 @@ copyright_year:
 copyright_license:
   type: str
   help: Your project's license
-  default: "{%- if repository_provider == 'gitlab' -%}BBP Internal License{% else %}Apache License 2.0{% endif %}"
+  default: "{%- if repository_provider == 'gitlab' -%}BBP-internal-confidential{% else %}Apache License 2.0{% endif %}"
   choices:
-  - Apache License 2.0
-  - BBP Internal License
-  - BSD 3-Clause "New" or "Revised" License
-  - GNU Affero General Public License v3.0
-  - GNU General Public License v3.0
-  - GNU Lesser General Public License v3.0
-  - MIT License
-  - Mozilla Public License 2.0
+    Apache License 2.0: null
+    BBP Internal License: BBP-internal-confidential
+    BSD 3-Clause "New" or "Revised" License: null
+    GNU Affero General Public License v3.0: null
+    GNU General Public License v3.0: null
+    GNU Lesser General Public License v3.0: null
+    MIT License: null
+    Mozilla Public License 2.0: null
 support_py37:
   type: bool
   help: Should the project support py37?
