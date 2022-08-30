@@ -81,7 +81,8 @@ commands =
 basepython = python3.9
 changedir = docs
 extras = docs
-allowlist_externals = make
+allowlist_externals =
+    make
 # set warnings as errors using the -W sphinx option
 commands = make html SPHINXOPTS=-W{% if repository_provider == 'github' %}
 
