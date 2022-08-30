@@ -41,7 +41,7 @@ setup(
         "Source": "{{ download_url }}",
     },
     license="{{ copyright_license }}",
-    packages=find_packages(exclude=["tests"]),
+    packages=find_packages(include=["{{ package_name }}"]),
     python_requires={% if support_py37 %}">=3.7"{% else %}">=3.8"{% endif %},{% if repository_provider == 'gitlab' %}
     version=VERSION,{% else %}
     use_scm_version=True,
