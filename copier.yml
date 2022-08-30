@@ -37,7 +37,7 @@ distribution_name:
 package_name:
   type: str
   help: The name of the Python package
-  default: "{{ project_name.lower().replace('-', '_').replace(' ', '_') }}"
+  default: "{{ distribution_name.lower().replace('-', '_').replace(' ', '_') }}"
 version:
   type: str
   help: The default first version
