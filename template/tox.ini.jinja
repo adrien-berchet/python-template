@@ -52,10 +52,10 @@ commands =
 [testenv:check-packaging]
 skip_install = true
 deps =
-    wheel
+    build
     twine
 commands =
-    python setup.py sdist bdist_wheel -d {envtmpdir}/dist
+    python -m build -o {envtmpdir}/dist
     twine check {envtmpdir}/dist/*
 
 [testenv:lint]
@@ -78,7 +78,6 @@ commands =
     pre-commit run --all-files
 
 [testenv:docs]
-basepython = python3.9
 changedir = docs
 extras = docs
 allowlist_externals =
