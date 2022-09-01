@@ -33,7 +33,7 @@ team_name:
 distribution_name:
   type: str
   help: Your Python package distribution name (for `pip install NAME`)
-  default: "{{ project_name.replace('_', '-').replace(' ', '-') }}"
+  default: "{%- if repository_provider == 'gitlab' -%}{{ project_name.replace('_', '-').replace(' ', '-') }}{% else %}{{ project_name.lower().replace('_', '-').replace(' ', '-') }}{% endif %}"
 package_name:
   type: str
   help: The name of the Python package
