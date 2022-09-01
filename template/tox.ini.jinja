@@ -74,7 +74,7 @@ deps =
     codespell
     pre-commit
 commands =
-    codespell -i 2 -x .codespellignorelines -w {[base]files} README.md CHANGELOG.md
+    codespell -i 3 -x .codespellignorelines -w {[base]files} README.md CHANGELOG.md docs/source
     pre-commit run --all-files
 
 [testenv:docs]
