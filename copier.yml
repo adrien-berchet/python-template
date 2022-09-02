@@ -5,7 +5,7 @@ project_name:
 project_description:
   type: str
   help: The short description of the project
-  default: "TODO: write something meaningful here"
+  default: "TODO: write something meaningful here."
 repository_provider:
   type: str
   help: The destination platform used to store the repository

@@ -14,7 +14,6 @@ target-version = [{% if support_py37 %}
     "py38",
     "py39",
 ]
-include = '{{ package_name }}\/.*\.py$|tests\/.*\.py$|docs\/source\/conf\.py$|setup\.py$'
 
 # PYDOCSTYLE
 [tool.pydocstyle]
@@ -24,7 +23,6 @@ add-ignore = [
     "D107",
 ]
 convention = "google"
-match = "[{{ package_name }}, tests, docs/source/conf.py, setup.py]"
 
 # ISORT
 [tool.isort]
