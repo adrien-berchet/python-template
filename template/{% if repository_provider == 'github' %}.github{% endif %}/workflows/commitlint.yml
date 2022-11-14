@@ -16,4 +16,4 @@ jobs:
       - run: npm install -g --force commitlint @commitlint/cli commitlint-plugin-cleanfeet
       - run: npm install conventional-changelog-conventionalcommits
       - run: touch .git/COMMIT_EDITMSG
-      - run: echo ${{ github.event.pull_request.title }} | commitlint
+      - run: echo "${{ github.event.pull_request.title }}" | commitlint
