@@ -8,7 +8,7 @@ envlist ={% if repository_provider == 'gitlab' %}
     check-packaging
     lint
     docs
-    {{ 'py{' }}{% if support_py37 %}37,{% endif %}38,39}
+    {{ 'py{' }}{% if support_py37 %}37,{% endif %}38,39,310,311}
     coverage
 
 minversion = 3.18
@@ -91,4 +91,6 @@ python ={% if support_py37 %}
   3.7: py37, lint
   3.8: py38, check-packaging{% else %}
   3.8: py38, check-packaging, lint{% endif %}
-  3.9: py39, docs{% endif %}
+  3.9: py39, docs
+  3.10: py310
+  3.11: py311{% endif %}
