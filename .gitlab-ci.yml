@@ -8,12 +8,13 @@ include:
 
 .tox-template:
   variables:
-    KUBERNETES_MEMORY_LIMIT: 10Gi
-    KUBERNETES_MEMORY_REQUEST: 10Gi
+    KUBERNETES_MEMORY_LIMIT: 2Gi
+    KUBERNETES_MEMORY_REQUEST: 2Gi
 
 .pytest-template:
   variables:
     COVERAGE_FILE: .coverage-${CI_JOB_NAME}
+    SYS_PACKAGES: git
   artifacts:
     reports:
       junit: My-Project/reports/pytest-${CI_JOB_NAME}.xml
