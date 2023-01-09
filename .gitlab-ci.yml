@@ -8,8 +8,8 @@ include:
 
 .tox-template:
   variables:
-    KUBERNETES_MEMORY_LIMIT: 6Gi
-    KUBERNETES_MEMORY_REQUEST: 6Gi
+    KUBERNETES_MEMORY_LIMIT: 10Gi
+    KUBERNETES_MEMORY_REQUEST: 10Gi
 
 .pytest-template:
   variables:
