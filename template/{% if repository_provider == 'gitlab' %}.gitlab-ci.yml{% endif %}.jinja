@@ -15,7 +15,16 @@ include:
         - /ci/jobs/auto-release.yml
         - /ci/jobs/check-merge-request-title.yml
         - /ci/lib/pytest-template.yml{% if support_py37 %}
-        - /ci/jobs/py37.yml{% endif %}
-        - /ci/jobs/py38.yml
+        - /ci/jobs/py38.yml{% endif %}
         - /ci/jobs/py39.yml
         - /ci/jobs/coverage.yml
+
+{% if support_py37 %}
+py37:
+  extends: .pytest-template
+  variables:
+    TOXENV: ${CI_JOB_NAME},${CI_JOB_NAME}-min_versions{% else %}
+py38:
+  extends: .pytest-template
+  variables:
+    TOXENV: ${CI_JOB_NAME},${CI_JOB_NAME}-min_versions{% endif %}
