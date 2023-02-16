@@ -8,7 +8,7 @@ envlist ={% if repository_provider == 'gitlab' %}
     check-packaging
     lint
     docs
-    py{% if support_py37 %}37{% else %}38{% endif %}-min_versions
+    min_versions
     {{ 'py{' }}{% if support_py37 %}37,{% endif %}38,39,310,311}
     coverage
 
@@ -65,6 +65,9 @@ commands =
     python -m build -o {envtmpdir}/dist
     twine check {envtmpdir}/dist/*
 
+[testenv:min_versions]
+basepython = python{% if support_py37 %}3.7{% else %}3.8{% endif %}
+
 [testenv:lint]
 basepython = python{% if support_py37 %}3.7{% else %}3.8{% endif %}
 deps =
@@ -95,9 +98,9 @@ commands = make html SPHINXOPTS=-W{% if repository_provider == 'github' %}
 
 [gh-actions]
 python ={% if support_py37 %}
-  3.7: py37, py37-min_versions, lint
+  3.7: py37, lint
   3.8: py38{% else %}
-  3.8: py38, py38-min_versions, lint{% endif %}
+  3.8: py38, lint{% endif %}
   3.9: py39, docs
   3.10: py310, check-packaging
   3.11: py311{% endif %}
