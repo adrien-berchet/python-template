@@ -1,21 +1,85 @@
-# SETUPTOOLS
-[build-system]
-requires = [
-    "setuptools>=42",
-    "wheel",
-    "setuptools_scm[toml]>=3.4",
+{% if use_pyproject_toml %}[project]
+name = "{{ distribution_name }}"
+authors = [
+    { name="{{ author_name }}"{% if repository_provider == 'gitlab' %}, email="{{ author_email }}"{% endif %} }
+]
+description = "{{ project_description }}"
+readme = "README.md"
+requires-python = {% if support_py37 %}">=3.7"{% else %}">=3.8"{% endif %}
+license = { text = "{{ copyright_license }}" }
+classifiers = [
+    # TODO: Update to relevant classifiers
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",{% if support_py37 %}
+    "Programming Language :: Python :: 3.7",{% endif %}
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dynamic = ["version"]
+dependencies = [
+    "click>=7"
 ]
 
-# BLACK
+[project.optional-dependencies]
+docs = [
+    "m2r2",
+    "sphinx<6",
+    "sphinx-bluebrain-theme",
+    "sphinx-click",
+]
+test = [
+    "mock>=3",
+    "pytest>=6",
+    "pytest-click>=1",
+    "pytest-cov>=3",
+    "pytest-html>=2",
+]
+
+[project.urls]
+Homepage = "{{ project_url }}"
+Repository = "{{ download_url }}"
+Tracker = "{{ tracker_url }}"
+
+[build-system]
+requires = [
+    "setuptools>=45",{% if repository_provider == 'github' %}
+    "setuptools_scm[toml]>=6.2",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]{% else %}
+]
+build-backend = "setuptools.build_meta"{% endif %}
+
+[tool.setuptools.packages.find]
+include = ["{{ package_name }}*"]{% else %}[build-system]
+requires = [
+    "setuptools>=45",{% if repository_provider == 'github' %}
+    "setuptools_scm[toml]>=6.2",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]{% else %}
+]
+build-backend = "setuptools.build_meta"
+{% endif %}{% endif %}
+
 [tool.black]
 line-length = 100
 target-version = [{% if support_py37 %}
     "py37",{% endif %}
     "py38",
     "py39",
+    "py310",
+    "py311",
 ]
 
-# PYDOCSTYLE
 [tool.pydocstyle]
 # ignore the following:
 #   - D107: Missing docstring in __init__
@@ -24,13 +88,11 @@ add-ignore = [
 ]
 convention = "google"
 
-# ISORT
 [tool.isort]
 profile = "black"
 line_length = 100
 force_single_line = true
 
-# PYTEST
 [tool.pytest.ini_options]
 testpaths = [
     "tests",

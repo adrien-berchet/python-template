@@ -1,4 +1,24 @@
-"""Setup for the {{ distribution_name }} package."""{% if repository_provider == 'gitlab' %}
+"""Setup for the {{ distribution_name }} package."""{% if use_pyproject_toml %}{% if repository_provider == 'gitlab' %}
+import importlib.util
+{% endif %}
+from setuptools import setup{% if repository_provider == 'gitlab' %}
+
+spec = importlib.util.spec_from_file_location(
+    "{{ package_name }}.version",
+    "{{ package_name }}/version.py",
+)
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+VERSION = module.VERSION
+
+setup_kwargs = {
+    "name": "my-project",
+    "version": VERSION,
+}{% endif %}
+
+if __name__ == "__main__":{% if repository_provider == 'gitlab' %}
+    setup(**setup_kwargs){% else %}
+    setup(){% endif %}{% else %}{% if repository_provider == 'gitlab' %}
 import importlib.util{% endif %}
 from pathlib import Path
 
@@ -75,4 +95,4 @@ setup(
         "Programming Language :: Python :: 3.11",
         "Topic :: Scientific/Engineering :: Bio-Informatics",
     ],
-)
+){% endif %}

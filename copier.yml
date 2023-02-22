@@ -85,6 +85,13 @@ copyright_license:
     GNU Lesser General Public License v3.0: null
     MIT License: null
     Mozilla Public License 2.0: null
+use_pyproject_toml:
+  type: bool
+  help: Should the project store metadata into pyproject.toml file?
+  choices:
+    "yes": true
+    "no": false
+  default: "no"
 support_py37:
   type: bool
   help: Should the project support py37?
