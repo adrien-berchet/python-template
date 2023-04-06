@@ -16,3 +16,11 @@ def test_cli(cli_runner):
     )
     assert result.exit_code == 0
     assert result.output == "1 + 2 = 3\n"
+
+
+def test_entry_point(script_runner):
+    """Test the entry point."""
+    ret = script_runner.run("{{ distribution_name }}", "--version")
+    assert ret.success
+    assert ret.stdout.startswith("{{ distribution_name }}, version ")
+    assert ret.stderr == ""

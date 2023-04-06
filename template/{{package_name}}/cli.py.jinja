@@ -5,6 +5,7 @@ import {{ package_name }}.example
 
 
 @click.command("{{ distribution_name }}")
+@click.version_option()
 @click.option(
     "-x",
     "--x_value",
