@@ -25,6 +25,7 @@ author_email:
 maintainer:
   type: str
   help: The name of the current maintainer
+  default: null
 team_name:
   type: str
   help: The name of the team
