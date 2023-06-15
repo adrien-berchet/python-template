@@ -25,7 +25,8 @@ author_email:
 maintainer:
   type: str
   help: The name of the current maintainer
-  default: null
+  default: "null"
+  when: "{{ repository_provider == 'github' }}"
 team_name:
   type: str
   help: The name of the team
@@ -43,7 +44,6 @@ version:
   type: str
   help: The default first version
   default: 0.1.0.dev0
-  when: "{{ repository_provider == 'gitlab' }}"
 repository_namespace:
   type: str
   help: The repository namespace (user name or organization)
