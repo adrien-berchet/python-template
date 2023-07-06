@@ -21,28 +21,16 @@ include:
     paths:
       - My-Project/.coverage-${CI_JOB_NAME}
 
-py37-gitlab-withPy37-withToml:
+py38-gitlab-withToml:
   extends: .pytest-template
 
-py38-gitlab-withoutPy37-withToml:
+py38-github-withToml:
   extends: .pytest-template
 
-py37-github-withPy37-withToml:
+py38-gitlab-withoutToml:
   extends: .pytest-template
 
-py38-github-withoutPy37-withToml:
-  extends: .pytest-template
-
-py37-gitlab-withPy37-withoutToml:
-  extends: .pytest-template
-
-py38-gitlab-withoutPy37-withoutToml:
-  extends: .pytest-template
-
-py37-github-withPy37-withoutToml:
-  extends: .pytest-template
-
-py38-github-withoutPy37-withoutToml:
+py38-github-withoutToml:
   extends: .pytest-template
 
 # Create a tag with SemVer format

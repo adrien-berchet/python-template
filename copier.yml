@@ -25,7 +25,7 @@ author_email:
 maintainer:
   type: str
   help: The name of the current maintainer
-  default: "null"
+  default: ""
   when: "{{ repository_provider == 'github' }}"
 team_name:
   type: str
@@ -93,13 +93,14 @@ use_pyproject_toml:
     "yes": true
     "no": false
   default: "no"
-support_py37:
+setup_codeql:
   type: bool
-  help: Should the project support py37?
+  help: Should the project setup CodeQL workflow in CI?
   choices:
     "yes": true
     "no": false
-  default: "yes"
+  default: "no"
+  when: "{{ repository_provider == 'github' }}"
 init_git:
   type: bool
   help: Should git be initialized?

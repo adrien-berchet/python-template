@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [{% endraw %}{% if support_py37 %}"3.7", {% endif %}{% raw %}"3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
         min_versions: ["min_versions", "latest_versions"]
         exclude:
           - min_versions: "min_versions"
         include:
-          - python-version: {% endraw %}{% if support_py37 %}"3.7"{% else %}"3.8"{% endif %}{% raw %}
+          - python-version: "3.8"
             min_versions: "min_versions"
 
     steps:

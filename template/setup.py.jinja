@@ -65,7 +65,7 @@ setup(
     },
     license="{{ copyright_license }}",
     packages=find_namespace_packages(include=["{{ package_name }}*"]),
-    python_requires={% if support_py37 %}">=3.7"{% else %}">=3.8"{% endif %},{% if repository_provider == 'gitlab' %}
+    python_requires=">=3.8",{% if repository_provider == 'gitlab' %}
     version=VERSION,{% else %}
     use_scm_version=True,
     setup_requires=[
@@ -88,8 +88,7 @@ setup(
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3",{% if support_py37 %}
-        "Programming Language :: Python :: 3.7",{% endif %}
+        "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",

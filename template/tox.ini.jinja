@@ -9,7 +9,7 @@ envlist ={% if repository_provider == 'gitlab' %}
     lint
     docs
     min_versions
-    {{ 'py{' }}{% if support_py37 %}37,{% endif %}38,39,310,311}
+    {{ 'py{' }}38,39,310,311}
     coverage
 
 minversion = 3.18
@@ -66,10 +66,10 @@ commands =
     twine check {envtmpdir}/dist/*
 
 [testenv:min_versions]
-basepython = python{% if support_py37 %}3.7{% else %}3.8{% endif %}
+basepython = python3.8
 
 [testenv:lint]
-basepython = python{% if support_py37 %}3.7{% else %}3.8{% endif %}
+basepython = python3.8
 deps =
     pre-commit
     pylint
@@ -78,7 +78,7 @@ commands =
     pylint -j {env:PYLINT_NPROCS:1} {[base]files}
 
 [testenv:format]
-basepython = python{% if support_py37 %}3.7{% else %}3.8{% endif %}
+basepython = python3.8
 skip_install = true
 deps =
     codespell
@@ -97,10 +97,8 @@ allowlist_externals =
 commands = make html SPHINXOPTS=-W{% if repository_provider == 'github' %}
 
 [gh-actions]
-python ={% if support_py37 %}
-  3.7: py37, lint
-  3.8: py38{% else %}
-  3.8: py38, lint{% endif %}
+python =
+  3.8: py38, lint
   3.9: py39, docs
   3.10: py310, check-packaging
   3.11: py311{% endif %}

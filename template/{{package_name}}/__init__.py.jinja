@@ -2,8 +2,6 @@
 
 {{ project_description }}
 """
-{% if support_py37 %}import pkg_resources
+import importlib.metadata
 
-__version__ = pkg_resources.get_distribution("{{ distribution_name }}").version{% else %}import importlib.metadata
-
-__version__ = importlib.metadata.version("{{ distribution_name }}"){% endif %}
+__version__ = importlib.metadata.version("{{ distribution_name }}")

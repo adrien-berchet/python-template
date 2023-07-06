@@ -10,14 +10,14 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
-{% if support_py37 %}from pkg_resources import get_distribution{% else %}from importlib import metadata{% endif %}
+from importlib import metadata
 
 # -- Project information -----------------------------------------------------
 
 project = "{{ project_name }}"
 
 # The short X.Y version
-version = {% if support_py37 %}get_distribution("{{ distribution_name }}").version{% else %}metadata.version("{{ distribution_name }}"){% endif %}
+version = metadata.version("{{ distribution_name }}")
 
 # The full version, including alpha/beta/rc tags
 release = version
