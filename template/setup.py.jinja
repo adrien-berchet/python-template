@@ -12,7 +12,7 @@ spec.loader.exec_module(module)
 VERSION = module.VERSION
 
 setup_kwargs = {
-    "name": "my-project",
+    "name": "{{ distribution_name }}",
     "version": VERSION,
 }{% endif %}
 
