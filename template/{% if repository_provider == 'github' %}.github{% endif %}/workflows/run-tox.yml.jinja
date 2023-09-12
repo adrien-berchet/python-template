@@ -74,7 +74,7 @@ jobs:
         fail_ci_if_error: false
         directory: ./reports
         flags: pytest
-        name: "{% endraw %}{{ distribution_name }}{% raw %}-py${{ matrix.python-version }}"
+        name: "{% endraw %}{{ distribution_name }}{% raw %}-py${{ matrix.python-version }}-${{ matrix.min_versions }}"
     - name: Upload test artifacts
       uses: actions/upload-artifact@v3
       if: always()
