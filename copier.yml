@@ -92,7 +92,7 @@ use_pyproject_toml:
   choices:
     "yes": true
     "no": false
-  default: "no"
+  default: "yes"
 setup_codeql:
   type: bool
   help: Should the project setup CodeQL workflow in CI?
