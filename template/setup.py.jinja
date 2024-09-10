@@ -1,4 +1,5 @@
-"""Setup for the {{ distribution_name }} package."""{% if use_pyproject_toml %}{% if repository_provider == 'gitlab' %}
+"""Setup for the {{ distribution_name }} package."""
+{% if use_pyproject_toml %}{% if repository_provider == 'gitlab' %}
 import importlib.util
 {% endif %}
 from setuptools import setup{% if repository_provider == 'gitlab' %}
@@ -45,11 +46,11 @@ doc_reqs = [
 
 test_reqs = [
     "mock>=3",
-    "pytest>=6",
-    "pytest-click>=1",
-    "pytest-console-scripts>=1.3",
-    "pytest-cov>=3",
-    "pytest-html>=2",
+    "pytest>=6.1",
+    "pytest-click>=1.1",
+    "pytest-console-scripts>=1.4",
+    "pytest-cov>=4.1",
+    "pytest-html>=3.2",
 ]
 
 setup(
