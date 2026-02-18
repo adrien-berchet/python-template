@@ -18,8 +18,7 @@ def my_version():
 
 setup(
     name="python-template",
-    author="bbp-ou-cells",
-    author_email="bbp-ou-cells@groupes.epfl.ch",
+    author="adrien-berchet",
     description="Template for Python packages",
     long_description=Path("README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
@@ -27,6 +26,6 @@ setup(
     setup_requires=[
         "setuptools_scm",
     ],
-    python_requires=">=3.9",
+    python_requires=">=3.10",
     include_package_data=True,
 )

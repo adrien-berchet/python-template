@@ -14,7 +14,7 @@ pip install copier copier-templates-extensions jinja2-time
 This template can be used using the following commands:
 
 ```bash
-copier copy --UNSAFE git@bbpgitlab.epfl.ch:neuromath/python-template.git <new_project_directory>
+copier copy --trust git@...:python-template.git <new_project_directory>
 ```
 
 Then you just have to answer to the prompted questions and the new package directory will be

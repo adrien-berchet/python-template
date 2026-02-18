@@ -1,6 +1,7 @@
 """Extension to update the context of Copier."""
 import os
 import subprocess
+from pathlib import Path
 
 from copier_templates_extensions import ContextHook
 
@@ -17,7 +18,7 @@ class ContextUpdater(ContextHook):
         cwd = os.getcwd()
 
         try:
-            if twd is not None and twd.exists():
+            if twd is not None and Path(twd).exists():
                 os.chdir(twd)
             status = subprocess.run(["git", "status"], capture_output=True)
         finally:
