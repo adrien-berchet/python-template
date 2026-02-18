@@ -86,13 +86,6 @@ copyright_license:
     GNU Lesser General Public License v3.0: null
     MIT License: null
     Mozilla Public License 2.0: null
-use_pyproject_toml:
-  type: bool
-  help: Should the project store metadata into pyproject.toml file?
-  choices:
-    "yes": true
-    "no": false
-  default: "yes"
 setup_codeql:
   type: bool
   help: Should the project setup CodeQL workflow in CI?
