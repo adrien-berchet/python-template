@@ -1,21 +1,21 @@
 [project]
 name = "{{ distribution_name }}"
 authors = [
-    { name="{{ author_name }}"{% if repository_provider == 'gitlab' %}, email="{{ author_email }}"{% endif %} }
+    { name="{{ author_name }}", email="{{ author_email }} },
 ]
 description = "{{ project_description }}"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { text = "{{ copyright_license }}" }
 classifiers = [
     # TODO: Update to relevant classifiers
     "Development Status :: 2 - Pre-Alpha",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 dynamic = ["version"]
 dependencies = [
@@ -24,19 +24,26 @@ dependencies = [
 
 [project.optional-dependencies]
 docs = [
-    "docutils<0.21",
-    "m2r2",
-    "sphinx",
-    "sphinx-bluebrain-theme",
-    "sphinx-click",
+    "furo>=2024.04.27",
+    "myst-parser>=3",
+    "sphinx>=9",
+    "sphinx-click>=6",
 ]
 test = [
-    "mock>=3",
-    "pytest>=6.1",
+    "pytest>=8",
     "pytest-click>=1.1",
     "pytest-console-scripts>=1.4",
-    "pytest-cov>=4.1",
-    "pytest-html>=3.2",
+    "pytest-cov>=6.1",
+    "pytest-html>=4.1",
+]
+
+[dependency-groups]
+dev = [
+    "copier",{% if type_checker=="mypy" %}
+    "mypy",{% endif %}
+    "pre-commit",{% if type_checker=="pyright" %}
+    "pyright",{% endif %}
+    "types-mock",
 ]
 
 [project.urls]
@@ -49,8 +56,8 @@ Tracker = "{{ tracker_url }}"
 
 [build-system]
 requires = [
-    "setuptools>=45",
-    "setuptools_scm[toml]>=6.2",
+    "setuptools>=77",
+    "setuptools_scm[toml]>=8",
 ]
 build-backend = "setuptools.build_meta"
 
