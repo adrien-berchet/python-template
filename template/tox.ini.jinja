@@ -8,7 +8,7 @@ envlist =
     lint
     docs
     min_versions
-    {{ 'py{' }}311,312,313}
+    {{ 'py{' }}312,313,314}
     coverage
 
 minversion = 4.20
@@ -45,7 +45,7 @@ commands =
 
 [testenv:min_versions]
 inherit = ["testenv"]
-basepython = python3.11
+basepython = python3.12
 deps =
     uv
 commands_pre =
@@ -58,14 +58,14 @@ commands_pre =
     uv pip freeze
 
 [testenv:lint]
-basepython = python3.11
+basepython = python3.12
 deps =
     pre-commit
 commands =
     pre-commit run --all-files
 
 [testenv:format]
-basepython = python3.11
+basepython = python3.12
 skip_install = true
 deps =
     codespell
@@ -84,6 +84,6 @@ commands = make html SPHINXOPTS=-W{% if repository_provider == 'github' %}
 
 [gh-actions]
 python =
-  3.11: py311, lint
-  3.12: py312, check-packaging
-  3.13: py313, docs{% endif %}
+  3.12: py312, lint
+  3.13: py313, check-packaging
+  3.14: py314, docs{% endif %}
