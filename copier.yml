@@ -16,11 +16,11 @@ repository_provider:
 author_name:
   type: str
   help: The name of the author
-  default: "{%- if repository_provider == 'github' -%}Blue Brain Project, EPFL{%- elif repository_provider == 'gitlab' -%}bbp-ou-cells{% endif %}"
+  default: "{%- if repository_provider == 'github' -%}Adrien Berchet{%- elif repository_provider == 'gitlab' -%}bbp-ou-cells{% endif %}"
 author_email:
   type: str
   help: The contact email of the maintainers
-  default: bbp-ou-cells@groupes.epfl.ch
+  default: adrien.berchet@gmail.com
   when: "{{ repository_provider == 'gitlab' }}"
 maintainer:
   type: str
@@ -30,8 +30,7 @@ maintainer:
 team_name:
   type: str
   help: The name of the team
-  default: neuromath
-  when: "{{ repository_provider == 'gitlab' }}"
+  default: adrien-berchet
 distribution_name:
   type: str
   help: Your Python package distribution name (for `pip install NAME`)
@@ -47,8 +46,8 @@ version:
 repository_namespace:
   type: str
   help: The repository namespace (user name or organization)
-  default: "{%- if repository_provider == 'github' -%}BlueBrain{%- elif repository_provider == 'gitlab' -%}{{ team_name }}{% endif %}"
-  placeholder: "{%- if repository_provider == 'github' -%}BlueBrain{%- elif repository_provider == 'gitlab' -%}{{ team_name }}{% endif %}"
+  default: "{%- if repository_provider == 'github' -%}{{ team_name }}{%- elif repository_provider == 'gitlab' -%}{{ team_name }}{% endif %}"
+  placeholder: "{%- if repository_provider == 'github' -%}{{ team_name }}{%- elif repository_provider == 'gitlab' -%}{{ team_name }}{% endif %}"
 repository_name:
   type: str
   help: The repository name
@@ -76,7 +75,7 @@ copyright_year:
 copyright_license:
   type: str
   help: Your project's license
-  default: "{%- if repository_provider == 'gitlab' -%}BBP-internal-confidential{% else %}Apache License 2.0{% endif %}"
+  default: "MIT License"
   choices:
     Apache License 2.0: null
     BBP Internal License: BBP-internal-confidential
