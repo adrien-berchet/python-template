@@ -6,7 +6,7 @@ authors = [
 description = "{{ project_description }}"
 readme = "README.md"
 requires-python = ">=3.12"
-license = { text = "{{ copyright_license }}" }
+license-files = ["LICENSE.txt"]
 classifiers = [
     # TODO: Update to relevant classifiers
     "Development Status :: 2 - Pre-Alpha",
@@ -60,14 +60,19 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+include-package-data = true
+package-dir = {"" = "src"}
+zip-safe = false
+
 [tool.setuptools_scm]
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ["{{ package_name }}*"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py39"  # Minimum Python version
 
 [tool.ruff.lint]
 # Enable specific rules or extend existing rule sets
@@ -80,11 +85,11 @@ select = [
 ]
 ignore = [
     "D107",  # Missing docstring in __init__
-]
+    "D203",  # 1 blank line required before class docstring
+    "D213",  # Multi-line docstring summary should start at the second line
+    "D413",  # Missing blank line after last section
 
-[tool.ruff.format]
-# Use Black-compatible formatting
-target-version = "py39"
+]
 
 [tool.pydocstyle]
 # ignore the following:
