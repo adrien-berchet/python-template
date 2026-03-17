@@ -20,11 +20,6 @@ repos:
             - commit-msg
           additional_dependencies: ['conventional-changelog-conventionalcommits']
 
-  - repo: https://github.com/pycqa/isort
-    rev: 8.0.1
-    hooks:
-      - id: isort
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.5
     hooks:

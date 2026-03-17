@@ -88,8 +88,10 @@ ignore = [
     "D203",  # 1 blank line required before class docstring
     "D213",  # Multi-line docstring summary should start at the second line
     "D413",  # Missing blank line after last section
-
 ]
+
+[tool.ruff.lint.isort]
+force-single-line = true
 
 [tool.pydocstyle]
 # ignore the following:
@@ -98,11 +100,6 @@ add-ignore = [
     "D107",
 ]
 convention = "google"
-
-[tool.isort]
-profile = "black"
-line_length = 100
-force_single_line = true
 
 [tool.pytest.ini_options]
 testpaths = [
