@@ -1,3 +1,10 @@
+[build-system]
+requires = [
+    "setuptools>=77",
+    "setuptools_scm[toml]>=8",
+]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "{{ distribution_name }}"
 authors = [
@@ -18,16 +25,21 @@ classifiers = [
 ]
 dynamic = ["version"]
 dependencies = [
-    "click>=7"
+    "click>=8.1",
 ]
 
 [project.optional-dependencies]
+{% if sphinx -%}
 docs = [
-    "furo>=2024.04.27",
+    "furo>=2024.08.06",
     "myst-parser>=3",
     "sphinx>=9",
+    "sphinx-autobuild>=2024",
     "sphinx-click>=6",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-design>=0.6",
 ]
+{% endif -%}
 test = [
     "pytest>=8",
     "pytest-click>=1.1",
@@ -38,10 +50,14 @@ test = [
 
 [dependency-groups]
 dev = [
-    "copier",{% if type_checker=="mypy" %}
-    "mypy",{% endif %}
-    "prek",{% if type_checker=="pyright" %}
-    "pyright",{% endif %}
+    "copier",
+    "pre-commit",
+    "tox>=4.20",
+    {% if type_checker == "pyright" -%}
+    "pyright",
+    {% elif type_checker == "pyrefly" -%}
+    "pyrefly",
+    {% endif -%}
     "types-mock",
 ]
 
@@ -52,13 +68,6 @@ Tracker = "{{ tracker_url }}"
 
 [project.scripts]
 {{ distribution_name }} = "{{ package_name }}.cli:main"
-
-[build-system]
-requires = [
-    "setuptools>=77",
-    "setuptools_scm[toml]>=8",
-]
-build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 include-package-data = true
@@ -71,17 +80,46 @@ zip-safe = false
 where = ["src"]
 include = ["{{ package_name }}*"]
 
+{% if type_checker == "pyright" -%}
+[tool.pyright]
+typeCheckingMode = "{% if strict_typing %}strict{% else %}standard{% endif %}"
+reportMissingImports = false
+include = ["src", "tests"]
+{% elif type_checker == "pyrefly" -%}
+[tool.pyrefly]
+project-includes = ["src", "tests"]
+project-excludes = ["**/.tox/**", "**/.venv/**", "**/__pycache__/**"]
+search-path = ["src"]
+{% endif %}
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+addopts = """
+    --tb=native -vv --import-mode=importlib
+    """
+filterwarnings = "error"
+
+[tool.coverage.paths]
+source = ["src", "**/site-packages/"]
+
 [tool.ruff]
+src = ["src", "tests"]
 line-length = 100
 
 [tool.ruff.lint]
-# Enable specific rules or extend existing rule sets
 select = [
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "D",    # pydocstyle
     "E",    # pycodestyle errors
-    "W",    # pycodestyle warnings
     "F",    # pyflakes
     "I",    # isort
-    "D",    # pydocstyle
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "W",    # pycodestyle warnings
+    "SLF",  # private-member-access
 ]
 ignore = [
     "D107",  # Missing docstring in __init__
@@ -90,18 +128,8 @@ ignore = [
     "D413",  # Missing blank line after last section
 ]
 
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = ["SLF001"]
+
 [tool.ruff.lint.isort]
 force-single-line = true
-
-[tool.pydocstyle]
-# ignore the following:
-#   - D107: Missing docstring in __init__
-add-ignore = [
-    "D107",
-]
-convention = "google"
-
-[tool.pytest.ini_options]
-testpaths = [
-    "tests",
-]

@@ -1,0 +1,10 @@
+.git
+.github
+.tox
+.venv
+__pycache__
+*.py[co]
+build
+dist
+docs/build
+reports

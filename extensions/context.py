@@ -1,7 +1,6 @@
 """Extension to update the context of Copier."""
 import os
 import subprocess
-from pathlib import Path
 
 from copier_templates_extensions import ContextHook
 
@@ -16,11 +15,12 @@ class ContextUpdater(ContextHook):
         # Skip git initialization if the git repository is already initialized
         twd = context.get("_copier_conf", {}).get("dst_path")
         cwd = os.getcwd()
+        target_dir = os.fspath(twd) if twd is not None else None
 
         try:
-            if twd is not None and Path(twd).exists():
-                os.chdir(twd)
-            status = subprocess.run(["git", "status"], capture_output=True)
+            if target_dir is not None and os.path.exists(target_dir):
+                os.chdir(target_dir)
+            status = subprocess.run(["git", "status"], capture_output=True, check=False)
         finally:
             os.chdir(cwd)
 

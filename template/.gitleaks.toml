@@ -1,0 +1,15 @@
+# This allow-list is limited to YAML/YML files to cut down SealedSecrets false positives.
+# All gitleaks default rules still apply everywhere else (useDefault = true).
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+condition = "AND"
+regexes = [
+  '''(?:^|[^A-Za-z0-9+/=])(Ag[A-Za-z0-9+/]{500,}={0,2})(?:[^A-Za-z0-9+/=]|$)'''
+]
+paths = ['''(?i).*\.ya?ml$''']

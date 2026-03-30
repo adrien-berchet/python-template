@@ -1,0 +1,36 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "description": "GitHub Actions workflows are managed by the template",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchPackageNames": [
+        "astral-sh/setup-uv",
+        "actions/cache",
+        "actions/checkout",
+{% if sphinx and setup_github_pages_docs %}        "actions/deploy-pages",
+        "actions/upload-pages-artifact",
+{% endif %}        "actions/setup-node",
+        "actions/setup-python",
+        "actions/upload-artifact",
+        "codecov/codecov-action",
+{% if setup_container %}        "docker/build-push-action",
+        "docker/login-action",
+        "docker/metadata-action",
+        "docker/setup-buildx-action",
+{% endif %}        "mikepenz/action-junit-report",
+        "pypa/gh-action-pypi-publish",
+        "softprops/action-gh-release"
+        {% if setup_codeql %},
+        "github/codeql-action"
+        {% endif %}
+      ],
+      "enabled": false
+    }
+  ]
+}

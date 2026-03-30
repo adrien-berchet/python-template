@@ -1,0 +1,54 @@
+{% raw %}name: Publish Package And Create Release
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+
+jobs:
+  build-n-publish:
+    name: Build, publish, and release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+      - name: Build a wheel and a source tarball
+        run: |
+          uv venv .github/release-venv --python 3.12
+          uv pip install --python .github/release-venv/bin/python build "setuptools>=77" "setuptools_scm[toml]>=8"
+          .github/release-venv/bin/python -m build -o dist
+      - name: Check the built distributions
+        run: uvx twine check --strict dist/*
+{% endraw %}{% if sphinx %}
+{% raw %}      - name: Build release documentation bundle
+        run: |
+          uv venv .github/docs-venv --python 3.12
+          uv pip install --python .github/docs-venv/bin/python --group dev --extra docs -e .
+          .github/docs-venv/bin/tox -e docs
+          cd docs/build
+          zip -r ../../docs-html.zip html
+{% endraw %}{% endif %}
+{% raw %}      - name: Publish distribution package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*
+{% endraw %}{% if sphinx %}{% raw %}            docs-html.zip
+{% endraw %}{% endif %}{% raw %}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}{% endraw %}

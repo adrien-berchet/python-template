@@ -1,0 +1,56 @@
+"""Configuration for the Sphinx documentation builder."""
+
+from importlib import metadata
+
+project = "{{ project_name }}"
+distribution_name = "{{ distribution_name }}"
+release = metadata.version(distribution_name)
+version = release
+
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    "sphinx_click",
+    "myst_parser",
+    "sphinx_copybutton",
+    "sphinx_design",
+]
+
+myst_enable_extensions = ["colon_fence"]
+nitpicky = True
+nitpick_ignore = [
+    ("py:class", "NoneType"),
+    ("py:class", "'str'"),
+    ("py:class", "'float'"),
+    ("py:class", "'int'"),
+    ("py:class", "'bool'"),
+    ("py:class", "'object'"),
+]
+
+templates_path = ["_templates"]
+exclude_patterns = ["_build"]
+default_role = "any"
+
+autosummary_generate = True
+autodoc_member_order = "bysource"
+autodoc_typehints = "signature"
+autodoc_default_options = {
+    "members": True,
+    "show-inheritance": True,
+}
+
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+}
+
+copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True
+
+html_theme = "furo"
+html_title = project
+html_show_sourcelink = False
+html_show_sphinx = False
+html_show_copyright = False

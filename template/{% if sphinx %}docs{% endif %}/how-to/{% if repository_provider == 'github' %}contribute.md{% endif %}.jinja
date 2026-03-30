@@ -1,0 +1,40 @@
+# Contribute
+
+Contributions are welcome. The repository root includes a `CONTRIBUTING.md`
+file with the full project workflow; this page summarizes the most common
+steps for day-to-day development.
+
+## Start from a local checkout
+
+Create a branch for your work:
+
+```bash
+git checkout -b my-change main
+```
+
+## Install the local development hooks
+
+If you want checks to run automatically when you commit:
+
+```bash
+pre-commit install --install-hooks --hook-type commit-msg
+```
+
+## Run the validation suite
+
+Before opening a pull request, run the generated project checks locally:
+
+```bash
+tox
+```
+
+If you only want the main development environments:
+
+```bash
+tox run -e py312,lint,type-checking,check-packaging{% if sphinx %},docs{% endif %}
+```
+
+## Open a pull request
+
+Push your branch, open a pull request against `main`, and describe the change,
+its motivation, and any related issue numbers.

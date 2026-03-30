@@ -1,6 +1,8 @@
 """Tests for the {{ package_name }}.cli module."""
 
 from click.testing import CliRunner
+from click.testing import Result
+from pytest_console_scripts import RunResult
 from pytest_console_scripts import ScriptRunner
 
 import {{ package_name }}.cli
@@ -8,7 +10,7 @@ import {{ package_name }}.cli
 
 def test_cli(cli_runner: CliRunner):
     """Test the CLI."""
-    result = cli_runner.invoke(
+    result: Result = cli_runner.invoke(
         {{ package_name }}.cli.main,
         [
             "-x",
@@ -23,7 +25,7 @@ def test_cli(cli_runner: CliRunner):
 
 def test_entry_point(script_runner: ScriptRunner):
     """Test the entry point."""
-    ret = script_runner.run("{{ distribution_name }}", "--version")
+    ret: RunResult = script_runner.run(["{{ distribution_name }}", "--version"])  # pyright: ignore
     assert ret.success
     assert ret.stdout.startswith("{{ distribution_name }}, version ")
     assert ret.stderr == ""

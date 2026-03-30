@@ -1,5 +1,5 @@
-{%- if copyright_license == 'BBP-internal-confidential' %}               Blue Brain Project Internal License
-   Copyright {{ copyright_year }} Blue Brain Project, EPFL, all rights reserved
+{%- if copyright_license == 'internal-proprietary' %}               Internal / Proprietary License
+   Copyright {{ copyright_year }} {{ copyright_holder }}, all rights reserved
 {%- elif copyright_license == 'Apache License 2.0' %}                                 Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -188,7 +188,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright {{ copyright_year }} Blue Brain Project, EPFL
+   Copyright {{ copyright_year }} {{ copyright_holder }}
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -203,7 +203,7 @@
    limitations under the License.
 {%- elif copyright_license == 'BSD 3-Clause "New" or "Revised" License' %}BSD 3-Clause License
 
-Copyright (c) {{ copyright_year }} Blue Brain Project, EPFL
+Copyright (c) {{ copyright_year }} {{ copyright_holder }}
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -1732,7 +1732,7 @@ permanent authorization for you to choose that version for the
 Library.
 {%- elif copyright_license == 'MIT License' %}MIT License
 
-Copyright (c) {{ copyright_year }} Blue Brain Project, EPFL
+Copyright (c) {{ copyright_year }} {{ copyright_holder }}
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

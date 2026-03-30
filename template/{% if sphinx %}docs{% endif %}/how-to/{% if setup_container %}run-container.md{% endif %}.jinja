@@ -1,0 +1,25 @@
+# Run the Container Image
+
+If container automation is enabled for this project, the repository includes a
+`Dockerfile` and can publish images to GitHub Container Registry on tagged
+releases.
+
+## Build the image locally
+
+```bash
+docker build -t {{ repository_name }} .
+```
+
+## Run the CLI from the image
+
+```bash
+docker run --rm {{ repository_name }} --version
+```
+
+## Published image location
+
+Published images use the GitHub Container Registry name:
+
+```text
+ghcr.io/{{ repository_namespace }}/{{ repository_name }}
+```

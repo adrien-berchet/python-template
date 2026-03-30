@@ -1,0 +1,50 @@
+# Installation
+
+## Check your Python version
+
+You will need Python 3.12 or later. You can check your version with:
+
+```bash
+python3 --version
+```
+
+## Create a virtual environment
+
+It is recommended to install the project in a virtual environment so it does
+not interfere with any existing Python software:
+
+```bash
+python3 -m venv /path/to/venv
+source /path/to/venv/bin/activate
+```
+
+## Install the package
+
+You can install the latest published release with:
+
+```bash
+python3 -m pip install {{ distribution_name }}
+```
+
+To install directly from the repository instead:
+
+```bash
+python3 -m pip install git+{{ download_url }}.git
+```
+
+Once installed, you can verify the command-line interface is available:
+
+```bash
+{{ distribution_name }} --version
+```
+
+## Set up a development environment
+
+For local development, `uv` provides a fast workflow without requiring a
+committed lockfile:
+
+```bash
+uv venv
+source .venv/bin/activate
+uv pip install --group dev --all-extras -e .
+```

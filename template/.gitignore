@@ -1,42 +1,56 @@
-# data
-.eggs
-.idea
-*.pyc
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+*.egg-info/
+.installed.cfg
+*.egg
+uv.lock
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.venv*/
+venv*/
+env/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage-*
+coverage.xml
+cov.xml
+reports/
+.pytest_cache/
+
+# Static analysis caches
+.mypy_cache/
+.ruff_cache/
+
+# Documentation
+docs/_build/
+docs/build/
+docs/_api/
+
+# Editors / OS clutter
+.DS_Store
+.idea/
 *.swp
 *py~
 *~
-*.egg-info
-
-# Mac related stuff
-.DS_Store
-
-# Packaging builds
-build
-dist
-
-# tox
-.tox
-
-# coverage
-.coverage
-.coverage*
-coverage.xml
-
-# venv
-venv
-test_venv
-
-# docs
-docs/build
-docs/source/generated
-docs/source/examples
-
-# reports
-reports
-
-# examples
-examples/.ipynb_checkpoints
 
 # Node
-node_modules
+node_modules/
 package-lock.json

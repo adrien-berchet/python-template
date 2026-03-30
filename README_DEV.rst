@@ -1,25 +1,19 @@
 Developer Readme
 ================
 
-The template should be updated whenever the standard project configuration is modified, for example
-when new tools are adopted as part of the developer workflow.
+The template should be updated whenever the default project structure or the
+generated tooling changes.
 
-New versions of Sphinx
-----------------------
+Validation
+----------
 
-In new versions of Sphinx, the ``sphinx-quickstart`` templates may be
-updated. For example, many of the default settings were removed in
-Sphinx version 2.x.x, which reduced the clutter in the ``conf.py``
-and the ``Makefile`` a lot.
+The repository-level test suite renders example projects from the local working
+tree and validates that the generated projects can lint, type-check, package,
+and build documentation.
 
-In order to make the upgrade process simpler, a utility has been
-written which may be run with ``tox`` to make these changes.
+Run the full suite with::
 
-A developer wishing to see the latest changes in the Sphinx default
-templates should take the following steps:
+    tox
 
-1. Run ``tox -r -e update-docs`` to update the Sphinx files in the
-   template.
-2. Run ``git diff`` to see changes and confirm that we want to
-   include them in the template. Note that the files will not have the `jinja` suffix.
-3. Commit the changes and submit them for review.
+The canonical answers used by the tests live in ``example-answers.yml``.
+Long-form repository documentation lives in ``docs/``.

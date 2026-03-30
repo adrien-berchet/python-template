@@ -1,24 +1,61 @@
+{% if repository_provider == 'github' %}[![CI]({{ download_url }}/actions/workflows/run-tox.yml/badge.svg)]({{ download_url }}/actions/workflows/run-tox.yml)
+[![Coverage](https://codecov.io/gh/{{ repository_namespace }}/{{ repository_name }}/branch/main/graph/badge.svg)](https://codecov.io/gh/{{ repository_namespace }}/{{ repository_name }})
+{% endif %}
+
 # {{ project_name }}
 
 {{ project_description }}
 
+This is where you should write a short paragraph that explains what the package
+does, how it is intended to be used, and why it exists.
+
+Source | <{{ download_url }}>
+:--- | :---
+Issues | <{{ tracker_url }}>
+{% if sphinx %}Documentation | <{{ project_url }}>
+{% endif %}
+{% if setup_container %}Container | <https://ghcr.io/{{ repository_namespace }}/{{ repository_name }}>
+{% endif %}
 
 ## Installation
 
-TODO: Replace this text by proper installation instructions.
+```bash
+python3 -m pip install {{ distribution_name }}
+```
 
+To install from the repository instead:
+
+```bash
+python3 -m pip install git+{{ download_url }}.git
+```
+
+For local development, a `uv`-based workflow is recommended:
+
+```bash
+uv venv
+source .venv/bin/activate
+uv pip install --group dev --all-extras -e .
+```
 
 ## Examples
 
-TODO: Provide here some examples on how this software can be used.{% if repository_provider == 'github' %}
+Library usage:
 
+```python
+from {{ package_name }} import __version__
+from {{ package_name }}.example import add
 
-## Funding & Acknowledgment
+print(__version__)
+print(add(1, 2))
+```
 
-The development of this software was supported by funding to the Blue Brain Project, a research
-center of the École polytechnique fédérale de Lausanne (EPFL), from the Swiss government’s ETH
-Board of the Swiss Federal Institutes of Technology.
+CLI usage:
 
-For license and authors, see `LICENSE.txt` and `AUTHORS.md` respectively.
+```bash
+{{ distribution_name }} --version
+{{ distribution_name }} -x 1 -y 2
+```{% if sphinx %}
 
-Copyright © {{ (copyright_year | int) - 1 }}-{{ copyright_year }} Blue Brain Project/EPFL{% endif %}
+<!-- README only content. Anything below this line won't be included in index.md -->
+
+See {{ project_url }} for more detailed documentation.{% endif %}

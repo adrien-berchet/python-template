@@ -1,19 +1,28 @@
 [base]
 name = {{ package_name }}
-files = {[base]name} tests docs/source/conf.py setup.py
+files = {[base]name} tests {% if sphinx %}docs/conf.py {% endif %}pyproject.toml README.md CHANGELOG.md
 
 [tox]
 envlist =
     check-packaging
     lint
-    docs
+    type-checking
     min_versions
     {{ 'py{' }}312,313,314}
-    coverage
+{% if sphinx %}    docs
+{% endif -%}
+skip_missing_interpreters = true
 
-minversion = 4.20
+minversion = 4.20{% if repository_provider == 'github' %}
+
+[gh-actions]
+python =
+  3.12: py312, lint, type-checking, min_versions
+  3.13: py313, check-packaging
+  3.14: py314{% if sphinx %}, docs{% endif %}{% endif %}
 
 [testenv]
+runner = virtualenv
 extras = test
 setenv =
     COVERAGE_FILE = {env:COVERAGE_FILE:.coverage-{envname}}
@@ -44,10 +53,10 @@ commands =
     twine check {envtmpdir}/dist/*
 
 [testenv:min_versions]
-inherit = ["testenv"]
 basepython = python3.12
 deps =
     uv
+allowlist_externals = uv
 commands_pre =
     uv pip compile \
         --resolution lowest-direct \
@@ -60,30 +69,46 @@ commands_pre =
 [testenv:lint]
 basepython = python3.12
 deps =
-    prek
+    pre-commit
 commands =
-    prek run --all-files
+    pre-commit run --all-files
 
 [testenv:format]
 basepython = python3.12
 skip_install = true
 deps =
     codespell
-    prek
+    pre-commit
 commands =
-    codespell -i 3 -x .codespellignorelines -w {[base]files} README.md CHANGELOG.md docs/source
-    prek run --all-files
+    codespell -i 3 -x .codespellignorelines -w {[base]files}
+    pre-commit run --all-files
+
+[testenv:type-checking]
+extras = test
+deps =
+    {{ type_checker }}
+commands =
+    {% if type_checker == "pyright" %}pyright src tests{% else %}pyrefly check src tests{% endif %}{% if sphinx %}
 
 [testenv:docs]
 changedir = docs
 extras = docs
-allowlist_externals =
-    make
-# set warnings as errors using the -W sphinx option
-commands = make html SPHINXOPTS=-W{% if repository_provider == 'github' %}
+commands =
+    sphinx-build \
+        --fresh-env \
+        --show-traceback \
+        --fail-on-warning \
+        --keep-going \
+        . \
+        build/html
 
-[gh-actions]
-python =
-  3.12: py312, lint
-  3.13: py313, check-packaging
-  3.14: py314, docs{% endif %}
+[testenv:docs-autobuild]
+changedir = docs
+extras = docs
+commands =
+    sphinx-autobuild \
+        --show-traceback \
+        --watch \
+        ../README.md \
+        . \
+        build/html{% endif %}

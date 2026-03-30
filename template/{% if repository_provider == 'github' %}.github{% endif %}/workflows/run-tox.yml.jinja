@@ -1,0 +1,82 @@
+{% raw %}name: Run all tox jobs using Python3
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13", "3.14"]
+        min_versions: ["min_versions", "latest_versions"]
+        exclude:
+          - min_versions: "min_versions"
+        include:
+          - python-version: "3.12"
+            min_versions: "min_versions"
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7
+    - name: Get current month
+      id: date
+      run: echo "date=$(date +'%Y-%m')" >> $GITHUB_OUTPUT
+    - name: Cache tox and pre-commit environments
+      uses: actions/cache@v4
+      with:
+        path: |
+          .tox
+          ~/.cache/pre-commit
+        key: ${{ runner.os }}-${{ matrix.python-version }}-${{ steps.date.outputs.date }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('tox.ini') }}-${{ hashFiles('.pre-commit-config.yaml') }}
+    - name: Install tox
+      run: |
+        uv venv .github/tox-venv --python ${{ matrix.python-version }}
+        uv pip install --python .github/tox-venv/bin/python "tox>=4.20" tox-gh-actions
+    - name: Clear results in tox environments
+      run: |
+        rm -rf .tox/*/tmp
+    - name: Run tox with latest versions
+      if: ${{ matrix.min_versions == 'latest_versions' }}
+      run: |
+        .github/tox-venv/bin/tox
+    - name: Run tox with min versions
+      if: ${{ matrix.min_versions == 'min_versions' }}
+      run: |
+        .github/tox-venv/bin/tox run -e min_versions
+    - name: JUnit Report Action
+      uses: mikepenz/action-junit-report@v5
+      if: always() # always run even if the previous step fails
+      with:
+        report_paths: 'reports/pytest-*.xml'
+    - name: Upload to codecov
+      uses: codecov/codecov-action@v4
+      with:
+        fail_ci_if_error: false
+        directory: ./reports
+        flags: pytest
+        name: "{% endraw %}{{ distribution_name }}{% raw %}-py${{ matrix.python-version }}-${{ matrix.min_versions }}"
+        token: ${{ secrets.CODECOV_TOKEN }}
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: tests-${{ matrix.python-version }}-${{ matrix.min_versions }}
+        retention-days: 4
+        path: |
+          .tox/py*/tmp
+{% endraw %}{% if sphinx %}{% raw %}          docs/build
+{% endraw %}{% endif %}{% raw %}
+          reports{% endraw %}
