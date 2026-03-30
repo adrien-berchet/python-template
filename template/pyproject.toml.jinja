@@ -40,7 +40,7 @@ test = [
 dev = [
     "copier",{% if type_checker=="mypy" %}
     "mypy",{% endif %}
-    "pre-commit",{% if type_checker=="pyright" %}
+    "prek",{% if type_checker=="pyright" %}
     "pyright",{% endif %}
     "types-mock",
 ]

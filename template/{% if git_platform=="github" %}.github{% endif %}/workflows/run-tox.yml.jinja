@@ -37,13 +37,13 @@ jobs:
         packages: graphviz
         version: 1.0
         execute_install_scripts: true
-    - name: Cache tox and precommit environments
+    - name: Cache tox and Prek environments
       uses: actions/cache@v4
       with:
         path: |
           .tox
-          ~/.cache/pre-commit
-        key: ${{ runner.os }}-${{ matrix.python-version }}-${{ steps.date.outputs.date }}-${{ hashFiles('setup.py') }}-${{ hashFiles('.pre-commit-config.yaml') }}
+          ~/.cache/prek
+        key: ${{ runner.os }}-${{ matrix.python-version }}-${{ steps.date.outputs.date }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('tox.ini') }}-${{ hashFiles('.pre-commit-config.yaml') }}
     - name: Register dot plugin
       # This step should only be used when you need dot / graphviz
       run: |
