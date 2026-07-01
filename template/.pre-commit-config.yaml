@@ -36,22 +36,16 @@ repos:
       - id: gitleaks
         args: ["--config=.gitleaks.toml"]
 
-  - repo: local
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.20
     hooks:
-      - id: ruff
-        name: lint with ruff
-        language: system
-        entry: ruff check --force-exclude --fix
-        types: [python]
-        require_serial: true
+      - id: ruff-check
+        args: ["--fix"]
 
       - id: ruff-format
-        name: format with ruff
-        language: system
-        entry: ruff format --force-exclude
-        types: [python]
-        require_serial: true
 
+  - repo: local
+    hooks:
       - id: uv-sync
         name: update uv.lock and venv
         pass_filenames: false
