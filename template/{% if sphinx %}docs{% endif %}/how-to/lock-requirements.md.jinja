@@ -1,0 +1,50 @@
+# Manage the lockfile
+
+## Overview
+
+This project uses a `uv.lock` file to pin all dependencies to known-good
+versions. CI tests run against these pinned versions (`uv run --locked tox`),
+ensuring reproducibility across machines and time.
+
+## Specifying dependencies
+
+Dependencies are declared in `pyproject.toml`:
+
+- **Runtime**: `[project] dependencies`
+- **Development**: `[dependency-groups] dev`
+- **Extras**: `[project.optional-dependencies]` (e.g. `docs`, `test`)
+
+Use minimum version constraints (`sphinx>=9`) rather than upper bounds. Only add
+an upper bound if an upstream release breaks your code.
+
+## Updating the lockfile
+
+After editing `pyproject.toml`, regenerate the lockfile:
+
+```bash
+uv sync
+```
+
+This updates `uv.lock` and refreshes your local virtual environment without
+upgrading other existing dependencies. The `uv-sync` pre-commit hook runs this
+automatically on every commit that touches `pyproject.toml` or `uv.lock`.
+
+To upgrade **all** dependencies to their latest compatible versions:
+
+```bash
+uv sync --upgrade
+```
+
+Renovate (when enabled) runs this automatically once a week via the
+`lockFileMaintenance` setting.
+
+## Verifying reproducibility
+
+To confirm your environment exactly matches the lockfile:
+
+```bash
+uv sync --locked
+```
+
+This fails if `uv.lock` is out of date, ensuring your local environment and CI
+agree on every dependency version.

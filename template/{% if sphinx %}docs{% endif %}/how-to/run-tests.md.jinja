@@ -1,0 +1,46 @@
+# Run the tests
+
+Tests are run with [pytest] via [tox].
+
+## Quick run
+
+To run tests directly with pytest:
+
+```bash
+uv run pytest
+```
+
+## Full tox suite
+
+To run the same suite that CI runs (including lint and type-checking):
+
+```bash
+tox -p
+```
+
+To run a single environment:
+
+```bash
+tox -e py312          # tests only
+tox -e lint           # pre-commit hooks
+tox -e type-checking  # pyright
+tox -e docs           # documentation build
+```
+
+## Running a specific test
+
+```bash
+uv run pytest tests/test_example.py
+uv run pytest tests/test_example.py::test_add_3_4
+```
+
+## Coverage report
+
+The test run generates a coverage report in `reports/`:
+
+```bash
+uv run pytest --cov={{ package_name }} --cov-report=html
+```
+
+[pytest]: https://pytest.org/
+[tox]: https://tox.wiki/

@@ -1,0 +1,54 @@
+# Debug the container
+
+The debug container image includes [debugpy], allowing you to attach a remote
+debugger to the running process.
+
+## Pull the debug image
+
+```bash
+docker pull ghcr.io/{{ repository_namespace }}/{{ repository_name }}:latest-debug
+```
+
+## Run the debug container
+
+```bash
+docker run -it --rm \
+    -p 5678:5678 \
+    ghcr.io/{{ repository_namespace }}/{{ repository_name }}:latest-debug \
+    -m {{ package_name }}
+```
+
+The container starts [debugpy] listening on port 5678 and waits for a debugger
+to connect before executing `{{ package_name }}`.
+
+## Attach VSCode
+
+Add this configuration to `.vscode/launch.json`:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to container (debugpy)",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/src",
+                    "remoteRoot": "/app/.venv/lib/python3.12/site-packages"
+                }
+            ]
+        }
+    ]
+}
+```
+
+Press **F5** or use **Run → Start Debugging** to connect. The container resumes
+execution once the debugger attaches.
+
+[debugpy]: https://github.com/microsoft/debugpy
