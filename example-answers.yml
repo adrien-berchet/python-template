@@ -9,13 +9,15 @@ repository_name: python-template-example
 repository_host: github.com
 download_url: https://github.com/adrien-berchet/python-template-example
 tracker_url: https://github.com/adrien-berchet/python-template-example/issues
-project_url: https://python-template-example.readthedocs.io
+docs_url: https://python-template-example.readthedocs.io
 docs_type: sphinx
 type_checker: pyright
 strict_typing: true
 setup_renovate: no
 setup_github_pages_docs: no
 setup_container: no
+docker_debug: no
+pypi: yes
 copyright_holder: Adrien Berchet
 copyright_license: MIT License
 init_git: yes

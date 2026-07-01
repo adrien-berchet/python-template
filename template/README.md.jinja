@@ -12,7 +12,7 @@ does, how it is intended to be used, and why it exists.
 Source | <{{ download_url }}>
 :--- | :---
 Issues | <{{ tracker_url }}>
-{% if sphinx %}Documentation | <{{ project_url }}>
+{% if sphinx %}Documentation | <{{ docs_url }}>
 {% endif %}
 {% if setup_container %}Container | <https://ghcr.io/{{ repository_namespace }}/{{ repository_name }}>
 {% endif %}
@@ -58,4 +58,4 @@ CLI usage:
 
 <!-- README only content. Anything below this line won't be included in index.md -->
 
-See {{ project_url }} for more detailed documentation.{% endif %}
+See {{ docs_url }} for more detailed documentation.{% endif %}

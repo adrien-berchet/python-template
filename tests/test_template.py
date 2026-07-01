@@ -54,7 +54,7 @@ def test_template_readme_docs_mode(tmp_path: Path) -> None:
     project_path = copy_project(
         tmp_path / "generated",
         docs_type="README",
-        project_url="https://example.com/project",
+        docs_url="https://example.com/project",
     )
     pyproject_toml = (project_path / "pyproject.toml").read_text(encoding="utf-8")
     tox_ini = (project_path / "tox.ini").read_text(encoding="utf-8")
@@ -91,6 +91,23 @@ def test_container_files_render_when_enabled(tmp_path: Path) -> None:
     assert (project_path / "Dockerfile").exists()
     assert (project_path / ".dockerignore").exists()
     assert (project_path / ".github" / "workflows" / "_container.yml").exists()
+    assert not (project_path / ".github" / "workflows" / "_debug_container.yml").exists()
+
+
+def test_debug_container_renders_when_enabled(tmp_path: Path) -> None:
+    """Debug container workflow should render when docker_debug is enabled."""
+    project_path = copy_project(
+        tmp_path / "generated",
+        setup_container=True,
+        docker_debug=True,
+    )
+
+    assert (project_path / "Dockerfile").exists()
+    assert (project_path / ".github" / "workflows" / "_container.yml").exists()
+    assert (project_path / ".github" / "workflows" / "_debug_container.yml").exists()
+    dockerfile = (project_path / "Dockerfile").read_text(encoding="utf-8")
+    assert "AS debug" in dockerfile
+    assert "debugpy" in dockerfile
 
 
 def test_pyright_standard_typing_mode(tmp_path: Path) -> None:
@@ -248,3 +265,9 @@ def test_python_versions_match_across_configs(tmp_path: Path) -> None:
     assert pyproject_toml["project"]["requires-python"] == ">=3.12"
     assert "Programming Language :: Python :: 3.12" in pyproject_toml["project"]["classifiers"]
     assert "Programming Language :: Python :: 3.14" in pyproject_toml["project"]["classifiers"]
+
+    python_version_file = (project_path / ".python-version").read_text(encoding="utf-8").strip()
+    min_version = pyproject_toml["project"]["requires-python"].lstrip(">=")
+    assert python_version_file == min_version, (
+        f".python-version ({python_version_file!r}) must match requires-python ({min_version!r})"
+    )

@@ -3,6 +3,14 @@
   "extends": [
     "config:recommended"
   ],
+  "lockFileMaintenance": {
+    "description": "Keep uv.lock up to date",
+    "enabled": true,
+    "automerge": true
+  },
+  "pre-commit": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "description": "GitHub Actions workflows are managed by the template",

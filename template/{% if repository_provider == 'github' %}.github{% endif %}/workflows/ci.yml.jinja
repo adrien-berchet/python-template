@@ -42,6 +42,19 @@ jobs:
       packages: write
 {% endraw %}
 {% endif %}
+{% if setup_container and docker_debug %}
+{% raw %}
+  debug_container:
+    needs: [container, test]
+    if: always()
+    uses: ./.github/workflows/_debug_container.yml
+    with:
+      publish: ${{ needs.test.result == 'success' }}
+    permissions:
+      contents: read
+      packages: write
+{% endraw %}
+{% endif %}
 {% if sphinx and setup_github_pages_docs %}
 {% raw %}
   docs:

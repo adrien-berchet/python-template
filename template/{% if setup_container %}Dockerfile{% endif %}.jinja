@@ -1,9 +1,29 @@
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+# Build stage: install dependencies using uv into a virtual environment
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS build
 
 WORKDIR /app
 COPY . /app
 
-RUN uv pip install --system .
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --locked --no-editable --no-dev
+{% if docker_debug %}
+# Debug stage: adds debugpy for remote debugging
+FROM build AS debug
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv pip install --python /app/.venv/bin/python debugpy
+
+ENV PATH=/app/.venv/bin:$PATH
+EXPOSE 5678
+ENTRYPOINT ["python", "-m", "debugpy", "--wait-for-client", "--listen", "0.0.0.0:5678"]
+CMD ["-m", "{{ package_name }}"]
+{% endif %}
+# Runtime stage: minimal image with only the installed application
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS runtime
+
+WORKDIR /app
+COPY --from=build /app/.venv /app/.venv
+ENV PATH=/app/.venv/bin:$PATH
 
 ENTRYPOINT ["{{ distribution_name }}"]
 CMD ["--version"]

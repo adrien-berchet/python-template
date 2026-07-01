@@ -12,21 +12,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v7
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7
-
-      - name: Install project and documentation dependencies
-        run: |
-          uv venv .github/docs-venv --python 3.12
-          uv pip install --python .github/docs-venv/bin/python --group dev --extra docs -e .
+      - name: Install graphviz
+        run: sudo apt-get install -y graphviz
 
       - name: Build documentation
-        run: .github/docs-venv/bin/tox -e docs
+        run: uv run --locked tox -e docs
 
       - name: Upload documentation artifact
         uses: actions/upload-pages-artifact@v3

@@ -75,9 +75,9 @@ tracker_url:
   help: The tracker URL
   default: "{%- if repository_provider == 'gitlab' -%}https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/-/issues{%- else -%}https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/issues{% endif %}"
   placeholder: "{%- if repository_provider == 'gitlab' -%}https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/-/issues{%- else -%}https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/issues{% endif %}"
-project_url:
+docs_url:
   type: str
-  help: The project homepage or documentation URL
+  help: The project documentation URL (e.g. ReadTheDocs, GitHub Pages)
   default: "{{ download_url }}"
   placeholder: "{{ download_url }}"
 docs_type:
@@ -123,6 +123,14 @@ setup_container:
     "no": false
   default: "no"
   when: "{{ repository_provider == 'github' }}"
+docker_debug:
+  type: bool
+  help: Should a debug Docker image target be generated (with debugpy for remote debugging)?
+  choices:
+    "yes": true
+    "no": false
+  default: "no"
+  when: "{{ setup_container }}"
 pypi:
   type: bool
   help: |
@@ -199,3 +207,4 @@ _exclude:
   - "~*"
 _tasks:
     - "{%- if init_git -%}git init; git add --all; git remote add origin {{ ssh_url }}{% else %}{% endif %}"
+    - "SETUPTOOLS_SCM_PRETEND_VERSION_FOR_{{ distribution_name | upper | replace('-', '_') }}={{ version }} uv lock"

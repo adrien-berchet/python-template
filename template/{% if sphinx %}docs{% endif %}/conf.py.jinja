@@ -10,6 +10,7 @@ version = release
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
+    "sphinx.ext.inheritance_diagram",
     "sphinx.ext.intersphinx",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
@@ -42,6 +43,9 @@ autodoc_default_options = {
     "show-inheritance": True,
 }
 
+graphviz_output_format = "svg"
+inheritance_graph_attrs = {"rankdir": "TB"}
+
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
 }
@@ -49,8 +53,12 @@ intersphinx_mapping = {
 copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
 copybutton_prompt_is_regexp = True
 
+linkcheck_ignore = [r"http://localhost:\d+/"]
+
 html_theme = "furo"
 html_title = project
+html_logo = "images/DUMMY-LOGO.svg"
+html_favicon = html_logo
 html_show_sourcelink = False
 html_show_sphinx = False
 html_show_copyright = False
