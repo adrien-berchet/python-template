@@ -24,12 +24,6 @@ repos:
             - commit-msg
           additional_dependencies: ['conventional-changelog-conventionalcommits']
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.5
-    hooks:
-      - id: ruff-check
-        args: ["--fix"]
-      - id: ruff-format
   - repo: https://github.com/codespell-project/codespell
     rev: v2.4.2
     hooks:
@@ -44,6 +38,20 @@ repos:
 
   - repo: local
     hooks:
+      - id: ruff
+        name: lint with ruff
+        language: system
+        entry: ruff check --force-exclude --fix
+        types: [python]
+        require_serial: true
+
+      - id: ruff-format
+        name: format with ruff
+        language: system
+        entry: ruff format --force-exclude
+        types: [python]
+        require_serial: true
+
       - id: uv-sync
         name: update uv.lock and venv
         pass_filenames: false
