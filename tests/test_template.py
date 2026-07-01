@@ -225,6 +225,24 @@ def test_copier_update_roundtrip(tmp_path: Path) -> None:
     run_cmd(["copier", "update", "--UNSAFE", "--defaults", "--conflict", "inline"], cwd=project_path)
 
 
+def test_example_workflow_installs_copier_extensions() -> None:
+    """The example regeneration job should install Copier's required Jinja extensions."""
+    workflow_path = (
+        Path(__file__).resolve().parent.parent / ".github" / "workflows" / "_example.yml"
+    )
+    workflow = yaml.safe_load(workflow_path.read_text(encoding="utf-8"))
+    regenerate_step = next(
+        step
+        for step in workflow["jobs"]["update"]["steps"]
+        if step.get("name") == "Regenerate example"
+    )
+    run_script = regenerate_step["run"]
+
+    assert "--with copier-templates-extensions" in run_script
+    assert "--with jinja2-time" in run_script
+    assert "copier copy" in run_script
+
+
 def test_renovate_actions_match_workflows(tmp_path: Path) -> None:
     """The optional Renovate config should ignore the shipped GitHub Actions."""
     project_path = copy_project(

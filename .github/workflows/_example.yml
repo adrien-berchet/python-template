@@ -19,7 +19,10 @@ jobs:
 
       - name: Regenerate example
         run: |
-          uvx copier copy --data-file example-answers.yml --defaults --overwrite --vcs-ref=HEAD . /tmp/example
+          uvx \
+            --with copier-templates-extensions \
+            --with jinja2-time \
+            copier copy --trust --data-file example-answers.yml --defaults --overwrite --vcs-ref=HEAD . /tmp/example
           sed -i 's|_src_path: .|_src_path: https://github.com/adrien-berchet/python-template.git|' /tmp/example/.copier-answers.yml
           rm -rf /tmp/example/.git
 
