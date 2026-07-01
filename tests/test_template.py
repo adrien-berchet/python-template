@@ -24,8 +24,8 @@ def test_template_defaults(tmp_path: Path) -> None:
     assert (project_path / ".github").exists()
     assert not (project_path / "Dockerfile").exists()
     assert not (project_path / "renovate.json").exists()
-    assert not (project_path / ".github" / "workflows" / "publish-docs.yml").exists()
-    assert not (project_path / ".github" / "workflows" / "publish-container.yml").exists()
+    assert not (project_path / ".github" / "workflows" / "_docs.yml").exists()
+    assert not (project_path / ".github" / "workflows" / "_container.yml").exists()
     assert 'typeCheckingMode = "strict"' in pyproject_toml.read_text(encoding="utf-8")
 
     run_cmd(
@@ -77,7 +77,7 @@ def test_github_pages_docs_workflow_renders_when_enabled(tmp_path: Path) -> None
         setup_github_pages_docs=True,
     )
 
-    assert (project_path / ".github" / "workflows" / "publish-docs.yml").exists()
+    assert (project_path / ".github" / "workflows" / "_docs.yml").exists()
     assert (project_path / ".readthedocs.yml").exists()
 
 
@@ -90,7 +90,7 @@ def test_container_files_render_when_enabled(tmp_path: Path) -> None:
 
     assert (project_path / "Dockerfile").exists()
     assert (project_path / ".dockerignore").exists()
-    assert (project_path / ".github" / "workflows" / "publish-container.yml").exists()
+    assert (project_path / ".github" / "workflows" / "_container.yml").exists()
 
 
 def test_pyright_standard_typing_mode(tmp_path: Path) -> None:
@@ -239,11 +239,11 @@ def test_python_versions_match_across_configs(tmp_path: Path) -> None:
     """The generated metadata and CI matrix should agree on supported versions."""
     project_path = copy_project(tmp_path / "generated")
     workflow = yaml.safe_load(
-        (project_path / ".github" / "workflows" / "run-tox.yml").read_text(encoding="utf-8")
+        (project_path / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
     )
     pyproject_toml = tomllib.loads((project_path / "pyproject.toml").read_text(encoding="utf-8"))
 
-    python_versions = workflow["jobs"]["build"]["strategy"]["matrix"]["python-version"]
+    python_versions = workflow["jobs"]["test"]["strategy"]["matrix"]["python-version"]
     assert python_versions == ["3.12", "3.13", "3.14"]
     assert pyproject_toml["project"]["requires-python"] == ">=3.12"
     assert "Programming Language :: Python :: 3.12" in pyproject_toml["project"]["classifiers"]

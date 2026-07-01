@@ -1,0 +1,27 @@
+name: New Python version reminder
+
+on:
+  schedule:
+    - cron: "0 9 1 12 *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  open-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Open new Python version checklist issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "Update for new Python version" \
+            --body "A new Python version may be available. Check and update:
+          - [ ] \`tox.ini\` — add new \`pyXYZ\` to \`envlist\` and \`[gh-actions]\` mapping
+          - [ ] \`pyproject.toml\` — add \`Programming Language :: Python :: 3.X\` classifier
+          - [ ] \`.github/workflows/ci.yml\` — add new version to \`python-version\` matrix
+          - [ ] \`pyproject.toml\` — update \`requires-python\` if dropping old versions"

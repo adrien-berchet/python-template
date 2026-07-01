@@ -1,0 +1,31 @@
+name: Create GitHub Release
+
+on:
+  workflow_call:
+
+jobs:
+  artifacts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Zip docs bundle if present
+        run: |
+          if [ -d html ]; then
+            mv html "$GITHUB_REF_NAME"
+            zip -r docs.zip "$GITHUB_REF_NAME"
+            rm -rf "$GITHUB_REF_NAME"
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: ${{ contains(github.ref_name, 'a') || contains(github.ref_name, 'b') || contains(github.ref_name, 'rc') }}
+          files: "*"
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

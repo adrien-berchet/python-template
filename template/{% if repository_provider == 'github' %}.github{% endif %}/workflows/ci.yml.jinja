@@ -1,0 +1,71 @@
+{% raw %}name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  lint:
+    uses: ./.github/workflows/_tox.yml
+    with:
+      tox: lint,type-checking
+
+  test:
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13", "3.14"]
+      fail-fast: false
+    uses: ./.github/workflows/_test.yml
+    with:
+      python-version: ${{ matrix.python-version }}
+    secrets: inherit
+
+  dist:
+    uses: ./.github/workflows/_dist.yml
+{% endraw %}
+{% if setup_container %}
+{% raw %}
+  container:
+    needs: test
+    if: always()
+    uses: ./.github/workflows/_container.yml
+    with:
+      publish: ${{ needs.test.result == 'success' }}
+    permissions:
+      contents: read
+      packages: write
+{% endraw %}
+{% endif %}
+{% if sphinx and setup_github_pages_docs %}
+{% raw %}
+  docs:
+    uses: ./.github/workflows/_docs.yml
+    permissions:
+      id-token: write
+      pages: write
+{% endraw %}
+{% endif %}
+{% if pypi %}
+{% raw %}
+  pypi:
+    needs: [dist, test]
+    if: github.ref_type == 'tag'
+    uses: ./.github/workflows/_pypi.yml
+    permissions:
+      id-token: write
+{% endraw %}
+{% endif %}
+{% raw %}
+  release:
+    needs: [dist, test{% endraw %}{% if sphinx and setup_github_pages_docs %}, docs{% endif %}{% raw %}]
+    if: github.ref_type == 'tag'
+    uses: ./.github/workflows/_release.yml
+    permissions:
+      contents: write
+{% endraw %}

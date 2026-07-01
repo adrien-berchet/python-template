@@ -1,0 +1,12 @@
+name: Weekly documentation link check
+
+on:
+  schedule:
+    - cron: "0 8 * * WED"
+  workflow_dispatch:
+
+jobs:
+  linkcheck:
+    uses: ./.github/workflows/_tox.yml
+    with:
+      tox: linkcheck

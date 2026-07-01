@@ -1,34 +1,33 @@
-{% raw %}name: Build And Publish Container Image
+name: Build and publish container image
 
 on:
-  pull_request:
-  push:
-    branches:
-      - main
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  packages: write
+  workflow_call:
+    inputs:
+      publish:
+        type: boolean
+        description: If true, pushes the image to the container registry on tags
+        default: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
       - name: Log in to GitHub Container Registry
-        if: github.event_name != 'pull_request'
+        if: inputs.publish && github.ref_type == 'tag'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build local test image
         uses: docker/build-push-action@v6
         env:
@@ -36,11 +35,13 @@ jobs:
         with:
           context: .
           load: true
-          tags: template-test-image
+          tags: container-test-image
+
       - name: Verify the container entry point
-        run: docker run --rm template-test-image --version
+        run: docker run --rm container-test-image --version
+
       - name: Create publish metadata
-        if: github.ref_type == 'tag'
+        if: inputs.publish && github.ref_type == 'tag'
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -48,8 +49,9 @@ jobs:
           tags: |
             type=ref,event=tag
             type=raw,value=latest
-      - name: Publish tagged image
-        if: github.ref_type == 'tag'
+
+      - name: Publish tagged image to GHCR
+        if: inputs.publish && github.ref_type == 'tag'
         uses: docker/build-push-action@v6
         env:
           DOCKER_BUILD_RECORD_UPLOAD: false
@@ -57,4 +59,4 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}{% endraw %}
+          labels: ${{ steps.meta.outputs.labels }}

@@ -111,4 +111,14 @@ commands =
         --watch \
         ../README.md \
         . \
-        build/html{% endif %}
+        build/html
+
+[testenv:linkcheck]
+changedir = docs
+extras = docs
+commands =
+    sphinx-build \
+        --fresh-env \
+        -b linkcheck \
+        . \
+        build/linkcheck{% endif %}

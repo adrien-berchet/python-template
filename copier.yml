@@ -123,6 +123,17 @@ setup_container:
     "no": false
   default: "no"
   when: "{{ repository_provider == 'github' }}"
+pypi:
+  type: bool
+  help: |
+    Publish to PyPI on tagged releases via OIDC trusted publishing?
+    (No API token needed — configure a trusted publisher on pypi.org after project creation,
+    using environment name "release".)
+  choices:
+    "yes": true
+    "no": false
+  default: "yes"
+  when: "{{ repository_provider == 'github' }}"
 sphinx:
   type: bool
   default: "{{ docs_type == 'sphinx' }}"
