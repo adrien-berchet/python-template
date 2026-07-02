@@ -12,7 +12,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v7
       - name: Run tox
         run: {% if use_uv_lock %}uv run --locked tox -e {% raw %}${{ inputs.tox }}{% endraw %}{% else %}uvx tox -e {% raw %}${{ inputs.tox }}{% endraw %}{% endif %}

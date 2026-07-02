@@ -17,7 +17,7 @@ jobs:
     runs-on: {% raw %}${{ inputs.runs-on }}{% endraw %}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -34,7 +34,7 @@ jobs:
         run: echo "date=$(date +'%Y-%m')" >> $GITHUB_OUTPUT
 
       - name: Cache tox and pre-commit environments
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .tox
@@ -63,7 +63,7 @@ jobs:
           token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
 
       - name: Upload test artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: tests-{% raw %}${{ inputs.runs-on }}-${{ inputs.python-version }}{% endraw %}
