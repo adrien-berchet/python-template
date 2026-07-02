@@ -1,8 +1,8 @@
 # Python repository template
 
 This Copier template generates a modern Python library skeleton with optional
-Sphinx documentation, selectable type-checking, GitHub/GitLab-aware repository
-files, and a stronger default tooling baseline.
+Sphinx documentation, selectable type-checking, GitHub-aware repository files,
+and a stronger default tooling baseline.
 
 ## Highlights
 
@@ -51,12 +51,11 @@ post-generation tasks.
 
 During generation, the most important choices are:
 
-1. `repository_provider`: `github` or `gitlab`
-2. `docs_type`: `sphinx` or `README`
-3. `type_checker`: `pyright` or `pyrefly`
-4. `strict_typing`: enabled only when `type_checker=pyright`
-5. `use_uv_lock`: optional committed `uv.lock` workflow
-6. `setup_renovate`: optional GitHub-only Renovate support
+1. `docs_type`: `sphinx` or `README`
+2. `type_checker`: `pyright` or `pyrefly`
+3. `strict_typing`: enabled only when `type_checker=pyright`
+4. `use_uv_lock`: optional committed `uv.lock` workflow
+5. `setup_renovate`: optional Renovate support
 
 
 ### Post generation steps
@@ -87,17 +86,3 @@ copier update
 If you want to change one or several answers, you can remove the `--force` argument and then answer
 the questions as usual. After that, you can check how your files were updated and then commit
 these changes.
-
-
-### Switching repository platforms
-
-The `Copier` template can also help migrate a repository between the supported git platforms. From
-the project directory, run the following command:
-
-```bash
-copier update
-```
-
-Then answer the questions and change the repository platform to the new value. The template should
-create the missing files and overwrite the existing ones. Note that it may not remove files that
-are no longer present in the template, so review the changes carefully before committing them.

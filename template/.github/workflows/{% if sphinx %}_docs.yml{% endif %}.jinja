@@ -1,4 +1,4 @@
-name: Build and publish documentation
+name: Build{% if setup_github_pages_docs %} and publish{% endif %} documentation
 
 on:
   workflow_call:
@@ -19,7 +19,7 @@ jobs:
 
       - name: Build documentation
         run: {% if use_uv_lock %}uv run --locked tox -e docs{% else %}uvx tox -e docs{% endif %}
-
+{% if setup_github_pages_docs %}
       - name: Upload documentation artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -36,3 +36,4 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+{% endif -%}

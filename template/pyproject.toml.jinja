@@ -46,6 +46,21 @@ test = [
     "pytest-html>=4.1",
 ]
 
+[tool.uv]
+constraint-dependencies = [
+    # Floor unpinned transitive dependencies so `tox -e min_versions` (uv pip compile
+    # --resolution lowest) can't resolve to ancient releases that fail to build
+    # (e.g. PyYAML <5.4 doesn't compile against modern libyaml).
+    "iniconfig>=1.1",
+    {% if sphinx -%}
+    "pyyaml>=6.0.1",
+    "beautifulsoup4>=4.9",
+    "colorama>=0.4",
+    "tornado>=6.1",
+    "livereload>=2.6",
+    {% endif -%}
+]
+
 [dependency-groups]
 dev = [
     "copier",

@@ -13,13 +13,13 @@ envlist =
 {% endif -%}
 skip_missing_interpreters = true
 
-minversion = 4.20{% if repository_provider == 'github' %}
+minversion = 4.20
 
 [gh-actions]
 python =
   3.12: py312, lint, type-checking, min_versions
   3.13: py313, check-packaging
-  3.14: py314{% if sphinx %}, docs{% endif %}{% endif %}
+  3.14: py314{% if sphinx %}, docs{% endif %}
 
 [testenv]
 runner = virtualenv
@@ -59,11 +59,11 @@ deps =
 allowlist_externals = uv
 commands_pre =
     uv pip compile \
-        --resolution lowest-direct \
+        --resolution lowest \
         --all-extras \
         --output-file {envtmpdir}/requirements_min.txt \
         pyproject.toml
-    uv pip install -r {envtmpdir}/requirements_min.txt
+    uv pip install --no-cache -r {envtmpdir}/requirements_min.txt
     uv pip freeze
 
 [testenv:lint]

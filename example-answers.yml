@@ -1,6 +1,5 @@
 project_name: Python Template Example
 project_description: A generated project used to validate the Copier template.
-repository_provider: github
 author_name: Adrien Berchet
 author_email: adrien.berchet@gmail.com
 maintainer: Adrien Berchet

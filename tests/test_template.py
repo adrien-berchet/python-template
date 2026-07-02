@@ -29,7 +29,9 @@ def test_template_defaults(tmp_path: Path) -> None:
     )
     assert not (project_path / "Dockerfile").exists()
     assert not (project_path / "renovate.json").exists()
-    assert not (project_path / ".github" / "workflows" / "_docs.yml").exists()
+    docs_workflow = project_path / ".github" / "workflows" / "_docs.yml"
+    assert docs_workflow.exists()
+    assert "deploy:" not in docs_workflow.read_text(encoding="utf-8")
     assert not (project_path / ".github" / "workflows" / "_container.yml").exists()
     assert 'typeCheckingMode = "strict"' in pyproject_toml.read_text(encoding="utf-8")
     assert "uvx tox -e" in (
@@ -90,17 +92,6 @@ def test_template_uv_lock_option(tmp_path: Path) -> None:
     assert "lockFileMaintenance" in renovate_config
 
 
-def test_template_gitlab_excludes_github_files(tmp_path: Path) -> None:
-    """GitLab renders should omit GitHub-only files."""
-    project_path = copy_project(tmp_path / "generated", repository_provider="gitlab")
-
-    assert not (project_path / ".github").exists()
-    assert not (project_path / "AUTHORS.md").exists()
-    assert not (project_path / "CONTRIBUTING.md").exists()
-    assert not (project_path / "codecov.yml").exists()
-    assert not (project_path / ".readthedocs.yml").exists()
-
-
 def test_template_readme_docs_mode(tmp_path: Path) -> None:
     """README-only mode should omit docs-specific files and environments."""
     project_path = copy_project(
@@ -113,6 +104,7 @@ def test_template_readme_docs_mode(tmp_path: Path) -> None:
 
     assert not (project_path / "docs").exists()
     assert not (project_path / ".readthedocs.yml").exists()
+    assert not (project_path / ".github" / "workflows" / "_docs.yml").exists()
     assert "sphinx>=" not in pyproject_toml
     assert "[testenv:docs]" not in tox_ini
 
@@ -129,7 +121,9 @@ def test_github_pages_docs_workflow_renders_when_enabled(tmp_path: Path) -> None
         setup_github_pages_docs=True,
     )
 
-    assert (project_path / ".github" / "workflows" / "_docs.yml").exists()
+    docs_workflow = project_path / ".github" / "workflows" / "_docs.yml"
+    assert docs_workflow.exists()
+    assert "deploy:" in docs_workflow.read_text(encoding="utf-8")
     assert (project_path / ".readthedocs.yml").exists()
 
 
@@ -198,7 +192,6 @@ def test_invalid_repository_name(tmp_path: Path) -> None:
             {
                 "project_name": "Broken Repo",
                 "project_description": "Broken repo description",
-                "repository_provider": "github",
                 "author_name": "Example Author",
                 "author_email": "author@example.com",
                 "repository_namespace": "example",

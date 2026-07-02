@@ -58,14 +58,17 @@ jobs:
       packages: write
 {% endraw %}
 {% endif %}
-{% if sphinx and setup_github_pages_docs %}
+{% if sphinx %}
 {% raw %}
   docs:
     uses: ./.github/workflows/_docs.yml
-    permissions:
+{% endraw %}
+{% if setup_github_pages_docs %}
+{% raw %}    permissions:
       id-token: write
       pages: write
 {% endraw %}
+{% endif %}
 {% endif %}
 {% if pypi %}
 {% raw %}

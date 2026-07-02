@@ -19,7 +19,6 @@ copier copy --UNSAFE <template_repository> <new_project_directory>
 
 The most important decisions are usually:
 
-- `repository_provider`: GitHub or GitLab
 - `docs_type`: Sphinx or README-only
 - `type_checker`: Pyright or Pyrefly
 - `strict_typing`: only shown for Pyright

@@ -10,13 +10,6 @@ project_description:
     {% if project_description | trim == "" %}
     Please provide a short project description.
     {% endif %}
-repository_provider:
-  type: str
-  help: The git platform used to host the repository
-  choices:
-    - github
-    - gitlab
-  default: github
 author_name:
   type: str
   help: The name of the author
@@ -29,7 +22,6 @@ maintainer:
   type: str
   help: The name of the current maintainer
   default: ""
-  when: "{{ repository_provider == 'github' }}"
 distribution_name:
   type: str
   help: Your Python package distribution name (for `pip install NAME`)
@@ -63,8 +55,8 @@ repository_name:
 repository_host:
   type: str
   help: The hostname of the repository server
-  default: "{%- if repository_provider == 'github' -%}github.com{%- elif repository_provider == 'gitlab' -%}gitlab.com{% endif %}"
-  placeholder: "{%- if repository_provider == 'github' -%}github.com{%- elif repository_provider == 'gitlab' -%}gitlab.com{% endif %}"
+  default: github.com
+  placeholder: github.com
 download_url:
   type: str
   help: The repository URL
@@ -73,8 +65,8 @@ download_url:
 tracker_url:
   type: str
   help: The tracker URL
-  default: "{%- if repository_provider == 'gitlab' -%}https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/-/issues{%- else -%}https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/issues{% endif %}"
-  placeholder: "{%- if repository_provider == 'gitlab' -%}https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/-/issues{%- else -%}https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/issues{% endif %}"
+  default: "https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/issues"
+  placeholder: "https://{{ repository_host }}/{{ repository_namespace }}/{{ repository_name }}/issues"
 docs_url:
   type: str
   help: The project documentation URL (e.g. ReadTheDocs, GitHub Pages)
@@ -113,7 +105,6 @@ setup_renovate:
     "yes": true
     "no": false
   default: "no"
-  when: "{{ repository_provider == 'github' }}"
 setup_github_pages_docs:
   type: bool
   help: Should GitHub Pages documentation deployment be generated?
@@ -121,7 +112,7 @@ setup_github_pages_docs:
     "yes": true
     "no": false
   default: "no"
-  when: "{{ repository_provider == 'github' and sphinx }}"
+  when: "{{ sphinx }}"
 setup_container:
   type: bool
   help: Should GitHub container build and publish automation be generated?
@@ -129,7 +120,6 @@ setup_container:
     "yes": true
     "no": false
   default: "no"
-  when: "{{ repository_provider == 'github' }}"
 docker_debug:
   type: bool
   help: Should a debug Docker image target be generated (with debugpy for remote debugging)?
@@ -148,7 +138,6 @@ pypi:
     "yes": true
     "no": false
   default: "yes"
-  when: "{{ repository_provider == 'github' }}"
 sphinx:
   type: bool
   default: "{{ docs_type == 'sphinx' }}"
@@ -181,7 +170,6 @@ setup_codeql:
     "yes": true
     "no": false
   default: "no"
-  when: "{{ repository_provider == 'github' }}"
 init_git:
   type: bool
   help: Should git be initialized?

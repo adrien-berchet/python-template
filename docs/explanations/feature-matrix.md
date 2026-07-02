@@ -8,17 +8,18 @@
 - `type_checker=pyrefly`: generate Pyrefly config and tox wiring
 - `use_uv_lock`: commit `uv.lock` and run generated automation in locked mode
 
-## GitHub-only options
+## Optional GitHub automation
 
 - `setup_renovate`: add Renovate configuration
 - `setup_github_pages_docs`: add GitHub Pages docs publishing while keeping Read the Docs support
 - `setup_container`: add container build/publish automation and container files
 
-## Always-on GitHub behavior
+## Always-on behavior
 
-GitHub-hosted projects also receive:
+Every generated project also receives:
 
 - issue and pull-request templates
-- the main CI workflow
+- the main CI workflow, including a Sphinx docs build check whenever `docs_type=sphinx`
+  (independent of `setup_github_pages_docs`)
 - release automation on version tags
 - optional CodeQL when enabled in the questionnaire

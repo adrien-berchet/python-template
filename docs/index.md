@@ -12,7 +12,7 @@ extend, and maintain the template.
 
 ## What this template provides
 
-- A generic Python project questionnaire for GitHub and GitLab repositories.
+- A generic Python project questionnaire for GitHub repositories.
 - Optional Sphinx documentation generation using MyST and Furo.
 - Optional type-checking with Pyright or Pyrefly.
 - A `uv`-centric developer workflow with an optional committed `uv.lock`.

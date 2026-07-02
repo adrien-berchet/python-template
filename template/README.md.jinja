@@ -1,8 +1,7 @@
-{% if repository_provider == 'github' %}[![CI]({{ download_url }}/actions/workflows/ci.yml/badge.svg)]({{ download_url }}/actions/workflows/ci.yml)
+[![CI]({{ download_url }}/actions/workflows/ci.yml/badge.svg)]({{ download_url }}/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/{{ repository_namespace }}/{{ repository_name }}/branch/main/graph/badge.svg)](https://codecov.io/gh/{{ repository_namespace }}/{{ repository_name }})
 {% if pypi %}[![PyPI](https://img.shields.io/pypi/v/{{ distribution_name }}.svg)](https://pypi.org/project/{{ distribution_name }})
 {% endif %}[![License](https://img.shields.io/github/license/{{ repository_namespace }}/{{ repository_name }})]({{ download_url }}/blob/main/LICENSE.txt)
-{% endif %}
 
 # {{ project_name }}
 
