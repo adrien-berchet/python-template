@@ -326,16 +326,33 @@ def test_renovate_actions_match_workflows(tmp_path: Path) -> None:
 def test_python_versions_match_across_configs(tmp_path: Path) -> None:
     """The generated metadata and CI matrix should agree on supported versions."""
     project_path = copy_project(tmp_path / "generated")
-    workflow = yaml.safe_load(
-        (project_path / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
-    )
+    ci_workflow = project_path / ".github" / "workflows" / "ci.yml"
+    ci_workflow_bytes = ci_workflow.read_bytes()
+    assert ci_workflow_bytes.endswith(b"\n")
+    assert not ci_workflow_bytes.endswith(b"\n\n")
+    workflow = yaml.safe_load(ci_workflow.read_text(encoding="utf-8"))
     pyproject_toml = tomllib.loads((project_path / "pyproject.toml").read_text(encoding="utf-8"))
 
     python_versions = workflow["jobs"]["test"]["strategy"]["matrix"]["python-version"]
     assert python_versions == ["3.12", "3.13", "3.14"]
+    assert workflow["jobs"]["test"]["permissions"] == {
+        "contents": "read",
+        "checks": "write",
+    }
     assert pyproject_toml["project"]["requires-python"] == ">=3.12"
     assert "Programming Language :: Python :: 3.12" in pyproject_toml["project"]["classifiers"]
     assert "Programming Language :: Python :: 3.14" in pyproject_toml["project"]["classifiers"]
+
+    test_workflow = yaml.safe_load(
+        (project_path / ".github" / "workflows" / "_test.yml").read_text(encoding="utf-8")
+    )
+    test_steps = test_workflow["jobs"]["run"]["steps"]
+    assert test_workflow["jobs"]["run"]["permissions"] == {
+        "contents": "read",
+        "checks": "write",
+    }
+    assert any(step.get("uses") == "mikepenz/action-junit-report@v6.4.2" for step in test_steps)
+    assert any(step.get("uses") == "codecov/codecov-action@v7" for step in test_steps)
 
     python_version_file = (project_path / ".python-version").read_text(encoding="utf-8").strip()
     min_version = pyproject_toml["project"]["requires-python"].lstrip(">=")

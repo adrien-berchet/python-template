@@ -15,6 +15,9 @@ on:
 jobs:
   run:
     runs-on: {% raw %}${{ inputs.runs-on }}{% endraw %}
+    permissions:
+      contents: read
+      checks: write
 
     steps:
       - uses: actions/checkout@v7
@@ -48,13 +51,13 @@ jobs:
         run: {% if use_uv_lock %}uv run --locked tox{% else %}uvx --with tox-gh-actions tox{% endif %}
 
       - name: JUnit Report Action
-        uses: mikepenz/action-junit-report@v5
+        uses: mikepenz/action-junit-report@v6.4.2
         if: always()
         with:
           report_paths: 'reports/pytest-*.xml'
 
       - name: Upload to codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: false
           directory: ./reports
