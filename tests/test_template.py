@@ -22,11 +22,26 @@ def test_template_defaults(tmp_path: Path) -> None:
 
     assert (project_path / "docs").exists()
     assert (project_path / ".github").exists()
+    assert not (project_path / "uv.lock").exists()
+    assert (
+        run_cmd(["git", "check-ignore", "uv.lock"], cwd=project_path, check=False).returncode
+        == 0
+    )
     assert not (project_path / "Dockerfile").exists()
     assert not (project_path / "renovate.json").exists()
     assert not (project_path / ".github" / "workflows" / "_docs.yml").exists()
     assert not (project_path / ".github" / "workflows" / "_container.yml").exists()
     assert 'typeCheckingMode = "strict"' in pyproject_toml.read_text(encoding="utf-8")
+    assert "uvx tox -e" in (
+        project_path / ".github" / "workflows" / "_tox.yml"
+    ).read_text(encoding="utf-8")
+    assert "uvx --with tox-gh-actions tox" in (
+        project_path / ".github" / "workflows" / "_test.yml"
+    ).read_text(encoding="utf-8")
+    assert "uv-sync" not in (project_path / ".pre-commit-config.yaml").read_text(
+        encoding="utf-8"
+    )
+    assert not (project_path / "docs" / "how-to" / "lock-requirements.md").exists()
 
     run_cmd(
         [
@@ -36,6 +51,43 @@ def test_template_defaults(tmp_path: Path) -> None:
         ],
         cwd=project_path,
     )
+
+
+def test_template_uv_lock_option(tmp_path: Path) -> None:
+    """The lockfile workflow should be opt-in for generated projects."""
+    project_path = copy_project(
+        tmp_path / "generated",
+        use_uv_lock=True,
+        setup_container=True,
+        setup_github_pages_docs=True,
+        setup_renovate=True,
+    )
+
+    assert (project_path / "uv.lock").exists()
+    assert (
+        run_cmd(["git", "check-ignore", "uv.lock"], cwd=project_path, check=False).returncode
+        == 1
+    )
+    run_cmd(["git", "ls-files", "--error-unmatch", "uv.lock"], cwd=project_path)
+    assert "uv run --locked tox -e" in (
+        project_path / ".github" / "workflows" / "_tox.yml"
+    ).read_text(encoding="utf-8")
+    assert "uv run --locked tox" in (
+        project_path / ".github" / "workflows" / "_test.yml"
+    ).read_text(encoding="utf-8")
+    assert "uv run --locked tox -e docs" in (
+        project_path / ".github" / "workflows" / "_docs.yml"
+    ).read_text(encoding="utf-8")
+    assert "uv-sync" in (project_path / ".pre-commit-config.yaml").read_text(
+        encoding="utf-8"
+    )
+    assert "uv sync --locked --no-editable --no-dev" in (
+        project_path / "Dockerfile"
+    ).read_text(encoding="utf-8")
+    assert (project_path / "docs" / "how-to" / "lock-requirements.md").exists()
+
+    renovate_config = json.loads((project_path / "renovate.json").read_text(encoding="utf-8"))
+    assert "lockFileMaintenance" in renovate_config
 
 
 def test_template_gitlab_excludes_github_files(tmp_path: Path) -> None:
@@ -256,6 +308,7 @@ def test_renovate_actions_match_workflows(tmp_path: Path) -> None:
     assert not (project_path / ".github" / "dependabot.yml").exists()
 
     renovate_config = json.loads((project_path / "renovate.json").read_text(encoding="utf-8"))
+    assert "lockFileMaintenance" not in renovate_config
     config_actions = set(renovate_config["packageRules"][0]["matchPackageNames"])
 
     used_actions: set[str] = set()

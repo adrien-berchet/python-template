@@ -40,6 +40,14 @@ Once installed, you can verify the command-line interface is available:
 
 ## Set up a development environment
 
+{% if use_uv_lock -%}
+For local development, `uv` syncs the committed lockfile into a virtual
+environment:
+
+```bash
+uv sync --all-extras
+```
+{% else -%}
 For local development, `uv` provides a fast workflow without requiring a
 committed lockfile:
 
@@ -48,3 +56,4 @@ uv venv
 source .venv/bin/activate
 uv pip install --group dev --all-extras -e .
 ```
+{% endif -%}

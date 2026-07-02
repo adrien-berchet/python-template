@@ -18,7 +18,7 @@ jobs:
         run: sudo apt-get install -y graphviz
 
       - name: Build documentation
-        run: uv run --locked tox -e docs
+        run: {% if use_uv_lock %}uv run --locked tox -e docs{% else %}uvx tox -e docs{% endif %}
 
       - name: Upload documentation artifact
         uses: actions/upload-pages-artifact@v3
@@ -31,7 +31,7 @@ jobs:
     if: github.ref_name == 'main' || github.ref_type == 'tag'
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: {% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}
 
     steps:
       - id: deployment

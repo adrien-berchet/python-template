@@ -99,6 +99,13 @@ strict_typing:
   help: Should Pyright be configured in strict mode?
   default: true
   when: "{{ type_checker == 'pyright' }}"
+use_uv_lock:
+  type: bool
+  help: Should generated automation commit and enforce uv.lock?
+  choices:
+    "yes": true
+    "no": false
+  default: "no"
 setup_renovate:
   type: bool
   help: Should Renovate configuration be generated for GitHub?
@@ -206,5 +213,5 @@ _exclude:
   - "copier.yml"
   - "~*"
 _tasks:
+    - "{%- if use_uv_lock -%}SETUPTOOLS_SCM_PRETEND_VERSION_FOR_{{ distribution_name | upper | replace('-', '_') }}={{ version }} uv lock{% endif %}"
     - "{%- if init_git -%}git init; git add --all; git remote add origin {{ ssh_url }}{% else %}{% endif %}"
-    - "SETUPTOOLS_SCM_PRETEND_VERSION_FOR_{{ distribution_name | upper | replace('-', '_') }}={{ version }} uv lock"

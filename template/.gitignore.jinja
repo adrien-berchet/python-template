@@ -14,7 +14,9 @@ sdist/
 *.egg-info/
 .installed.cfg
 *.egg
+{% if not use_uv_lock -%}
 uv.lock
+{% endif %}
 
 # Installer logs
 pip-log.txt

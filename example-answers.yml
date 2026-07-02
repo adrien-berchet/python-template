@@ -13,6 +13,7 @@ docs_url: https://python-template-example.readthedocs.io
 docs_type: sphinx
 type_checker: pyright
 strict_typing: true
+use_uv_lock: no
 setup_renovate: no
 setup_github_pages_docs: no
 setup_container: no

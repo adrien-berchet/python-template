@@ -7,7 +7,9 @@ repos:
     rev: v5.0.0
     hooks:
       - id: check-added-large-files
+{% if use_uv_lock %}
         exclude: ^uv.lock
+{% endif %}
       - id: check-case-conflict
       - id: check-yaml
       - id: check-merge-conflict
@@ -42,7 +44,7 @@ repos:
       - id: ruff-check
         args: ["--fix"]
 
-      - id: ruff-format
+      - id: ruff-format{% if use_uv_lock %}
 
   - repo: local
     hooks:
@@ -52,3 +54,4 @@ repos:
         language: system
         entry: uv sync
         files: ^(uv\.lock|pyproject\.toml)$
+{%- endif %}

@@ -23,6 +23,7 @@ The most important decisions are usually:
 - `docs_type`: Sphinx or README-only
 - `type_checker`: Pyright or Pyrefly
 - `strict_typing`: only shown for Pyright
+- `use_uv_lock`: whether to commit and enforce `uv.lock`
 - `setup_renovate`, `setup_github_pages_docs`, and `setup_container`: optional GitHub extras
 
 ## 4. Review the generated project

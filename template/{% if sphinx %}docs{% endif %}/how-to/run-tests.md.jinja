@@ -7,7 +7,7 @@ Tests are run with [pytest] via [tox].
 To run tests directly with pytest:
 
 ```bash
-uv run pytest
+{% if use_uv_lock %}uv run --locked pytest{% else %}pytest{% endif %}
 ```
 
 ## Full tox suite
@@ -30,8 +30,8 @@ tox -e docs           # documentation build
 ## Running a specific test
 
 ```bash
-uv run pytest tests/test_example.py
-uv run pytest tests/test_example.py::test_add_3_4
+{% if use_uv_lock %}uv run --locked pytest tests/test_example.py{% else %}pytest tests/test_example.py{% endif %}
+{% if use_uv_lock %}uv run --locked pytest tests/test_example.py::test_add_3_4{% else %}pytest tests/test_example.py::test_add_3_4{% endif %}
 ```
 
 ## Coverage report
@@ -39,7 +39,7 @@ uv run pytest tests/test_example.py::test_add_3_4
 The test run generates a coverage report in `reports/`:
 
 ```bash
-uv run pytest --cov={{ package_name }} --cov-report=html
+{% if use_uv_lock %}uv run --locked pytest --cov={{ package_name }} --cov-report=html{% else %}pytest --cov={{ package_name }} --cov-report=html{% endif %}
 ```
 
 [pytest]: https://pytest.org/

@@ -12,7 +12,7 @@ files, and a stronger default tooling baseline.
 * Optional strict Pyright mode.
 * Optional GitHub Renovate configuration.
 * Optional GitHub Pages and container-publishing automation for GitHub-hosted projects.
-* A `uv`-centric developer workflow for generated projects without requiring a committed `uv.lock`.
+* A `uv`-centric developer workflow with an optional committed `uv.lock`.
 * Generated project validation with linting, packaging, tests, docs, and min-version checks.
 
 ## Documentation
@@ -55,7 +55,8 @@ During generation, the most important choices are:
 2. `docs_type`: `sphinx` or `README`
 3. `type_checker`: `pyright` or `pyrefly`
 4. `strict_typing`: enabled only when `type_checker=pyright`
-5. `setup_renovate`: optional GitHub-only Renovate support
+5. `use_uv_lock`: optional committed `uv.lock` workflow
+6. `setup_renovate`: optional GitHub-only Renovate support
 
 
 ### Post generation steps

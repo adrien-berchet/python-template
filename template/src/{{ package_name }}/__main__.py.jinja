@@ -1,0 +1,12 @@
+"""Module entry point for {{ distribution_name }}."""
+
+from .cli import main
+
+
+def run(args: list[str] | None = None) -> None:
+    """Run the command line interface."""
+    main(args=args, prog_name="{{ distribution_name }}")
+
+
+if __name__ == "__main__":  # pragma: no cover
+    run()

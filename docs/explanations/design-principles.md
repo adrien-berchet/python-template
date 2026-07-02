@@ -21,9 +21,9 @@ Generated projects still get a modern baseline:
 - min-version compatibility validation
 - documentation tooling that can be disabled for simpler libraries
 
-## `uv` as workflow, not lockfile policy
+## `uv` without forcing lockfiles
 
 The generated projects now prefer `uv` for developer workflows and GitHub
-automation, while still remaining lockfile-free by default. That keeps the
-template fast and modern without forcing a committed `uv.lock` into every
-library repository.
+automation, while keeping committed `uv.lock` files optional. The default fits
+library projects that need to validate their declared dependency ranges, and
+applications can opt into locked CI when reproducible deployments matter more.

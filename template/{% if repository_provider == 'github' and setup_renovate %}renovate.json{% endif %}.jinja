@@ -3,11 +3,13 @@
   "extends": [
     "config:recommended"
   ],
+{% if use_uv_lock %}
   "lockFileMaintenance": {
     "description": "Keep uv.lock up to date",
     "enabled": true,
     "automerge": true
   },
+{% endif %}
   "pre-commit": {
     "enabled": true
   },

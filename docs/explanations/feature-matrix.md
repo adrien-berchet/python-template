@@ -6,6 +6,7 @@
 - `docs_type=README`: keep the project lightweight and omit docs-specific files
 - `type_checker=pyright`: generate Pyright config, with optional strict mode
 - `type_checker=pyrefly`: generate Pyrefly config and tox wiring
+- `use_uv_lock`: commit `uv.lock` and run generated automation in locked mode
 
 ## GitHub-only options
 

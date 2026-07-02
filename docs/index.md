@@ -15,6 +15,6 @@ extend, and maintain the template.
 - A generic Python project questionnaire for GitHub and GitLab repositories.
 - Optional Sphinx documentation generation using MyST and Furo.
 - Optional type-checking with Pyright or Pyrefly.
-- A `uv`-centric developer workflow without requiring a committed `uv.lock`.
+- A `uv`-centric developer workflow with an optional committed `uv.lock`.
 - Optional GitHub automation for releases, GitHub Pages docs, Renovate, and containers.
 - Template self-tests that validate render paths, updates, min-version compatibility, and gitleaks behavior.

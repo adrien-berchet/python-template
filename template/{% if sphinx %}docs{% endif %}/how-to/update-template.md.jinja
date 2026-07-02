@@ -22,7 +22,9 @@ Once all conflicts are resolved, commit the result.
 
 1. Ensure your project is clean and tests pass:
    ```bash
+{% if use_uv_lock -%}
    uv sync
+{% endif -%}
    tox -p
    ```
 2. Commit or stash any outstanding changes

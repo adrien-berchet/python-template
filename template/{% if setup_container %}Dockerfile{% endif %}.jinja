@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . /app
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked --no-editable --no-dev
+    uv sync {% if use_uv_lock %}--locked {% endif %}--no-editable --no-dev
 {% if docker_debug %}
 # Debug stage: adds debugpy for remote debugging
 FROM build AS debug

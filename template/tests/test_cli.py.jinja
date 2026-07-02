@@ -1,10 +1,12 @@
 """Tests for the {{ package_name }}.cli module."""
 
+import pytest
 from click.testing import CliRunner
 from click.testing import Result
 from pytest_console_scripts import RunResult
 from pytest_console_scripts import ScriptRunner
 
+import {{ package_name }}.__main__
 import {{ package_name }}.cli
 
 
@@ -29,3 +31,14 @@ def test_entry_point(script_runner: ScriptRunner):
     assert ret.success
     assert ret.stdout.startswith("{{ distribution_name }}, version ")
     assert ret.stderr == ""
+
+
+def test_module_entry_point(capsys: pytest.CaptureFixture[str]) -> None:
+    """Test the module entry point."""
+    with pytest.raises(SystemExit) as exc_info:
+        {{ package_name }}.__main__.run(["--version"])
+
+    assert exc_info.value.code == 0
+    captured = capsys.readouterr()
+    assert captured.out.startswith("{{ distribution_name }}, version ")
+    assert captured.err == ""
