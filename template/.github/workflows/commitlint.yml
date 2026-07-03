@@ -1,6 +1,9 @@
 name: Check PR titles using commitlint
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     types: [edited, opened, reopened, synchronize]
 
@@ -12,10 +15,22 @@ jobs:
       PR_TITLE: ${{ github.event.pull_request.title }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      - run: npm install -g --force commitlint @commitlint/cli commitlint-plugin-cleanfeet
-      - run: npm install conventional-changelog-conventionalcommits
-      - run: touch .git/COMMIT_EDITMSG
-      - run: echo "$PR_TITLE" | commitlint
+          node-version: lts/*
+      - run: npm install -g @commitlint/cli@21.2.0
+      - run: npm install conventional-changelog-conventionalcommits@10.2.0
+
+      - name: Validate current commit (last commit) with commitlint
+        if: github.event_name == 'push'
+        run: npx commitlint --last --verbose
+
+      - name: Validate PR title with commitlint
+        if: github.event_name == 'pull_request'
+        run: echo "$PR_TITLE" | commitlint
+
+      - name: Validate PR commits with commitlint
+        if: github.event_name == 'pull_request'
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose

@@ -39,3 +39,4 @@ jobs:
           publish_branch: main
           enable_jekyll: true  # don't put a .nojekyll
           exclude_assets: ''  # default would exclude .github
+          full_commit_message: "Chore: Regenerate example from ${{ github.sha }}"
