@@ -17,7 +17,7 @@ git checkout -b my-change main
 If you want checks to run automatically when you commit:
 
 ```bash
-pre-commit install --install-hooks
+prek install --install-hooks
 ```
 
 ## Run the validation suite

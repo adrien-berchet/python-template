@@ -36,12 +36,12 @@ jobs:
         id: date
         run: echo "date=$(date +'%Y-%m')" >> $GITHUB_OUTPUT
 
-      - name: Cache tox and pre-commit environments
+      - name: Cache tox and prek environments
         uses: actions/cache@v6
         with:
           path: |
             .tox
-            ~/.cache/pre-commit
+            ~/.cache/prek
           key: {% raw %}${{ runner.os }}-${{ inputs.python-version }}-${{ steps.date.outputs.date }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('tox.ini') }}-${{ hashFiles('.pre-commit-config.yaml') }}{% endraw %}{% if use_uv_lock %}-{% raw %}${{ hashFiles('uv.lock') }}{% endraw %}{% endif %}
 
       - name: Clear results in tox environments

@@ -69,19 +69,19 @@ commands_pre =
 [testenv:lint]
 basepython = python3.12
 deps =
-    pre-commit
+    prek
 commands =
-    pre-commit run --all-files
+    prek run --all-files
 
 [testenv:format]
 basepython = python3.12
 skip_install = true
 deps =
     codespell
-    pre-commit
+    prek
 commands =
     codespell -i 3 -x .codespellignorelines -w {[base]files}
-    pre-commit run --all-files
+    prek run --all-files
 
 [testenv:type-checking]
 extras = test

@@ -57,10 +57,10 @@ When you wish to contribute to the code base, please consider the following guid
   uv pip install --group dev --all-extras -e .
   ```
 
-* If you want git hooks to run automatically when you commit, install pre-commit once:
+* If you want git hooks to run automatically when you commit, install Prek once:
 
   ```shell
-  pre-commit install --install-hooks
+  prek install --install-hooks
   ```
 
 * Run the full test suite, and ensure that all tests pass (at least with one of the required

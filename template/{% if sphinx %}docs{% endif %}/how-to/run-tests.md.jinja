@@ -22,7 +22,7 @@ To run a single environment:
 
 ```bash
 tox -e py312          # tests only
-tox -e lint           # pre-commit hooks
+tox -e lint           # prek hooks
 tox -e type-checking  # pyright
 tox -e docs           # documentation build
 ```

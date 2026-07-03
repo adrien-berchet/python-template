@@ -26,8 +26,9 @@ uv sync
 ```
 
 This updates `uv.lock` and refreshes your local virtual environment without
-upgrading other existing dependencies. The `uv-sync` pre-commit hook runs this
-automatically on every commit that touches `pyproject.toml` or `uv.lock`.
+upgrading other existing dependencies. The `uv-sync` hook (run via `prek`)
+runs this automatically on every commit that touches `pyproject.toml` or
+`uv.lock`.
 
 To upgrade **all** dependencies to their latest compatible versions:
 
