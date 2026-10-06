@@ -6,3 +6,5 @@ local_config
 My-Project
 venv
 __pycache__
+
+*.code-workspace
